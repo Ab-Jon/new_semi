@@ -20,7 +20,6 @@ class _WalletScreenState extends State<WalletScreen> {
       context: context,
       barrierLabel: "Portfolio",
       barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.4), // dim background
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (context, _, __) {
         return Align(
@@ -38,7 +37,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 ), // background blur
                 child: Container(
                   width: double.infinity,
-                  color: Colors.white.withOpacity(0.9),
+                  color: Theme.of(context).colorScheme.surface,
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -48,7 +47,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         width: 40,
                         margin: const EdgeInsets.only(bottom: 16),
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -89,6 +88,8 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Widget _buildOption(String title) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+
     final isSelected = title == selectedPortfolio;
     return GestureDetector(
       onTap: () {
@@ -102,7 +103,9 @@ class _WalletScreenState extends State<WalletScreen> {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF4B0082) : Colors.grey[200],
+          color: isSelected ?   isLight
+              ? const Color(0xFF2B124C)
+              : const Color(0xFF632AAE) : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
@@ -149,20 +152,24 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Wallet',
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: isLight
+                ? const Color(0xFF2B124C)
+                : const Color(0xFF632AAE),
           ),
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
@@ -172,15 +179,15 @@ class _WalletScreenState extends State<WalletScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.background,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.black.withValues(),
+                //     blurRadius: 6,
+                //     offset: const Offset(0, 2),
+                //   ),
+                // ],
               ),
               child: Column(
                 children: [
@@ -262,7 +269,9 @@ class _WalletScreenState extends State<WalletScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
@@ -331,7 +340,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         ? Theme.of(context).colorScheme.primary
                         : Theme.of(
                             context,
-                          ).colorScheme.primary.withOpacity(0.3),
+                          ).colorScheme.primary.withValues(),
                   ),
                 );
               }).toList(),
@@ -348,7 +357,9 @@ class _WalletScreenState extends State<WalletScreen> {
                 Icon(
                   Icons.info_outline,
                   size: 18,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                 ),
               ],
             ),
@@ -372,7 +383,9 @@ class _WalletScreenState extends State<WalletScreen> {
                             radius: 20,
                             child: Icon(
                               item['icon'],
-                              color: Theme.of(context).colorScheme.primary,
+                              color: isLight
+                                  ? const Color(0xFF2B124C)
+                                  : const Color(0xFF632AAE),
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -430,13 +443,16 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Widget _buildAction(IconData icon, String label) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Column(
       children: [
         CircleAvatar(
           radius: 22,
           child: Icon(
             icon,
-            color: Theme.of(context).colorScheme.primary,
+            color: isLight
+                ? const Color(0xFF2B124C)
+                : const Color(0xFF632AAE),
             size: 22,
           ),
         ),

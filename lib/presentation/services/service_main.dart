@@ -1,6 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:semi_bill/presentation/services/airtime/airtime_home.dart';
+import 'package:semi_bill/presentation/services/betting/betting_screen.dart';
+import 'package:semi_bill/presentation/services/cable/cable_tv.dart';
+import 'package:semi_bill/presentation/services/crowdfund/crowd_fund.dart';
+import 'package:semi_bill/presentation/services/data/data_home.dart';
+import 'package:semi_bill/presentation/services/electricity/electricity_screen.dart';
+import 'package:semi_bill/presentation/services/gift/gift_user.dart';
+import 'package:semi_bill/presentation/services/internet/internet_screen.dart';
+import 'package:semi_bill/presentation/services/refer/refer_earn.dart';
 
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({super.key});
@@ -31,16 +40,16 @@ class _ServicesScreenState extends State<ServicesScreen> {
   ];
 
   final List<Map<String, dynamic>> services = [
-    {'icon': Ionicons.call_outline, 'title': 'Buy Airtime'},
-    {'icon': Ionicons.wifi_outline, 'title': 'Buy Data'},
-    {'icon': Ionicons.tv_outline, 'title': 'Pay Cable Tv'},
-    {'icon': Ionicons.game_controller_outline, 'title': 'Betting'},
-    {'icon': Ionicons.flash_outline, 'title': 'Electricity'},
-    {'icon': Ionicons.gift_outline, 'title': 'Gift User'},
-    {'icon': Ionicons.globe_outline, 'title': 'Internet'},
-    {'icon': Ionicons.people_outline, 'title': 'Refer & Earn'},
+    {'icon': Ionicons.call_outline, 'title': 'Buy Airtime', 'route': AirtimeScreen()},
+    {'icon': Ionicons.wifi_outline, 'title': 'Buy Data', 'route': DataScreen()},
+    {'icon': Ionicons.tv_outline, 'title': 'Pay Cable Tv', 'route': CableTvPage()},
+    {'icon': Ionicons.game_controller_outline, 'title': 'Betting', 'route': BettingPage()},
+    {'icon': Ionicons.flash_outline, 'title': 'Electricity', 'route': ElectricityScreen()},
+    {'icon': Ionicons.gift_outline, 'title': 'Gift User', 'route': GiftUserPage()},
+    {'icon': Ionicons.globe_outline, 'title': 'Internet', 'route': InternetScreen()},
+    {'icon': Ionicons.people_outline, 'title': 'Refer & Earn', 'route': ReferAndEarnPage()},
     {'icon': Ionicons.ticket_outline, 'title': 'Tickets'},
-    {'icon': Ionicons.cash_outline, 'title': 'Crowd Funding'},
+    {'icon': Ionicons.cash_outline, 'title': 'Crowd Funding', 'route': CrowdfundingPage()},
   ];
 
   @override
@@ -74,6 +83,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -105,7 +116,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                       margin: const EdgeInsets.only(right: 10),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
@@ -115,7 +128,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           Text(
                             banners[index]['title']!,
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -124,7 +137,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           Text(
                             banners[index]['subtitle']!,
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
+                              color: Colors.white,
                               fontSize: 12,
                             ),
                           ),
@@ -143,7 +156,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                 Text(
                                   "Apply Now",
                                   style: TextStyle(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: isLight
+                                        ? const Color(0xFF2B124C)
+                                        : const Color(0xFF632AAE),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -152,7 +167,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                 Icon(
                                   Icons.arrow_forward,
                                   size: 14,
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color: isLight
+                                      ? const Color(0xFF2B124C)
+                                      : const Color(0xFF632AAE),
                                 )
                               ],
                             ),
@@ -177,7 +194,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     height: 6,
                     width: _currentPage == index ? 16 : 6,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -207,39 +226,47 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 ),
                 itemBuilder: (context, index) {
                   final item = services[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          blurRadius: 5,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            item['icon'],
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 6),
-                          Flexible(
-                            child: Text(
-                              item['title'],
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => item['route']));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withValues(),
+                            blurRadius: 5,
+                            spreadRadius: 1,
                           ),
                         ],
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              item['icon'],
+                              color: isLight
+                                  ? const Color(0xFF2B124C)
+                                  : const Color(0xFF632AAE),
+                              size: 20,
+                            ),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                item['title'],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

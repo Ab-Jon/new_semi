@@ -142,10 +142,10 @@ class TicketVerifiedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF3A0A6A);
+    final isLight = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0414),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.85,
@@ -187,7 +187,9 @@ class TicketVerifiedPage extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
+                    backgroundColor: isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

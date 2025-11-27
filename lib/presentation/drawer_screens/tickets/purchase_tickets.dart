@@ -36,7 +36,7 @@ class MyTicketsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final Color primaryColor = const Color(0xFF3A0A6A);
+    final isLight = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -140,7 +140,9 @@ class MyTicketsScreen extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE),
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(16),
                         bottomRight: Radius.circular(16),

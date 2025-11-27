@@ -46,6 +46,8 @@ class _PostEventScreenState extends State<PostEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Post Event"),
@@ -223,9 +225,12 @@ class _PostEventScreenState extends State<PostEventScreen> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                child: const Text("Save"),
+                child: const Text("Save", style: TextStyle(color: Colors.white),),
               ),
             ),
           ],
@@ -269,8 +274,11 @@ class _PostEventScreenState extends State<PostEventScreen> {
           lastDate: DateTime(2030),
         );
         setState(() {
-          if (label == "Start") startDate = picked;
-          else endDate = picked;
+          if (label == "Start") {
+            startDate = picked;
+          } else {
+            endDate = picked;
+          }
         });
       },
       child: _selectorBox(
@@ -288,8 +296,11 @@ class _PostEventScreenState extends State<PostEventScreen> {
           initialTime: TimeOfDay.now(),
         );
         setState(() {
-          if (label == "Start") startTime = picked;
-          else endTime = picked;
+          if (label == "Start") {
+            startTime = picked;
+          } else {
+            endTime = picked;
+          }
         });
       },
       child: _selectorBox(

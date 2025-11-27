@@ -11,13 +11,12 @@ class PostCrowdPage extends StatefulWidget {
 }
 
 class _PostCrowdPageState extends State<PostCrowdPage> {
-  static const purple = Color(0xFF5924B0);
-  static const lightGrey = Color(0xFFF3F3F3);
 
   XFile? _selectedImage;
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -316,7 +315,9 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  backgroundColor: isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -375,13 +376,18 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
   }
 
   Widget categoryChip(String text, bool selected) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        color: selected ? isLight
+            ? const Color(0xFF2B124C)
+            : const Color(0xFF632AAE) : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary
+          color: isLight
+              ? const Color(0xFF2B124C)
+              : const Color(0xFF632AAE)
         )
       ),
       child: Row(
@@ -406,10 +412,13 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
   }
 
   Widget visibilityChip(String text, bool selected) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        color: selected ? isLight
+            ? const Color(0xFF2B124C)
+            : const Color(0xFF632AAE) : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Text(
@@ -423,10 +432,13 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
   }
 
   Widget promoChip(String text, bool selected) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       decoration: BoxDecoration(
-        color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        color: selected ? isLight
+            ? const Color(0xFF2B124C)
+            : const Color(0xFF632AAE) : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Text(

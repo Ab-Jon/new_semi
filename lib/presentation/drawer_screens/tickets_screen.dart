@@ -15,6 +15,8 @@ class _TicketsScreenState extends State<TicketsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+
     return Scaffold(
       floatingActionButton: selected == "events"
           ? FloatingActionButton(
@@ -23,7 +25,9 @@ class _TicketsScreenState extends State<TicketsScreen> {
           Navigator.push(context,
           MaterialPageRoute(builder: (context) => MyEventsPage()));
         },
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: isLight
+            ? const Color(0xFF2B124C)
+            : const Color(0xFF632AAE),
         child: Icon(Icons.add, color: Colors.white),
       )
           : null,
@@ -71,7 +75,9 @@ class _TicketsScreenState extends State<TicketsScreen> {
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: selected == "tickets"
-                          ? Theme.of(context).colorScheme.primary
+                          ? isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE)
                           : Theme.of(context).colorScheme.primary,
                       width: 0.8,
                     ),
@@ -82,7 +88,9 @@ class _TicketsScreenState extends State<TicketsScreen> {
                         Ionicons.ticket,
                         size: 40,
                         color:
-                        selected == "tickets" ? Theme.of(context).colorScheme.primary
+                        selected == "tickets" ? isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE)
                             : Theme.of(context).colorScheme.primary,
                       ),
                       SizedBox(width: 16),
@@ -124,7 +132,9 @@ class _TicketsScreenState extends State<TicketsScreen> {
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: selected == "events"
-                          ? Theme.of(context).colorScheme.primary
+                          ? isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE)
                           : Theme.of(context).colorScheme.primary,
                       width: 0.8,
                     ),
@@ -135,7 +145,9 @@ class _TicketsScreenState extends State<TicketsScreen> {
                         Ionicons.calendar,
                         size: 40,
                         color: selected == "events"
-                            ? Theme.of(context).colorScheme.primary
+                            ? isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE)
                             : Theme.of(context).colorScheme.primary,
                       ),
                       SizedBox(width: 16),

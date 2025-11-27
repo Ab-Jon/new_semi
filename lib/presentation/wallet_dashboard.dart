@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:semi_bill/presentation/draw_home.dart';
+import 'package:semi_bill/presentation/wallet/transfer/gift_user_page.dart';
 import 'package:semi_bill/presentation/wallet/wallet_bottom_sheet.dart';
+import 'package:semi_bill/presentation/wallet/withdrawal_screen.dart';
 
 class WalletDashboardScreen extends ConsumerWidget {
   WalletDashboardScreen({super.key});
@@ -148,13 +150,19 @@ class WalletDashboardScreen extends ConsumerWidget {
                           context,
                           Icons.arrow_upward,
                           "Withdraw",
-                          () {},
+                          () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => WithdrawalScreen()));
+                          },
                         ),
                         _actionButton(
                           context,
                           Icons.swap_horiz,
                           "Transfer",
-                          () {},
+                          () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => GiftUserPage()));
+                          },
                         ),
                       ],
                     ),

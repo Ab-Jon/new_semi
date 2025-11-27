@@ -5,7 +5,7 @@ import '../../themes/app_theme.dart';
 
 class WalletDepositSheet {
   static void show(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColors>()!;
+    final isLight = Theme.of(context).brightness == Brightness.light;
 
     showModalBottomSheet(
       context: context,
@@ -16,7 +16,7 @@ class WalletDepositSheet {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
           decoration: BoxDecoration(
-            color: colors.background,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
           ),
           child: Column(
@@ -25,8 +25,12 @@ class WalletDepositSheet {
               // top icon
               CircleAvatar(
                 radius: 26,
-                backgroundColor: colors.primary.withOpacity(0.15),
-                child: Icon(Icons.savings, color: colors.primary, size: 26),
+                backgroundColor: isLight
+                    ? const Color(0xFF2B124C)
+                    : const Color(0xFF632AAE),
+                child: Icon(Icons.savings, color: isLight
+                    ? const Color(0xFF2B124C)
+                    : const Color(0xFF632AAE), size: 26),
               ),
 
               const SizedBox(height: 15),
@@ -35,7 +39,6 @@ class WalletDepositSheet {
                 "Deposit only clean funds to the account number below",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: colors.textPrimary,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -52,18 +55,19 @@ class WalletDepositSheet {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
-                      color: colors.textPrimary,
                     ),
                   ),
                   const SizedBox(width: 10),
                   IconButton(
-                    icon: Icon(Icons.copy, size: 22, color: colors.primary),
+                    icon: Icon(Icons.copy, size: 22, color: isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE)),
                     onPressed: () {
                       Clipboard.setData(const ClipboardData(text: "804356788"));
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: const Text("Account number copied"),
-                          backgroundColor: colors.primary,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
                         ),
                       );
                     },
@@ -89,7 +93,6 @@ class WalletDepositSheet {
                         Text(
                           "Bank",
                           style: TextStyle(
-                            color: colors.textPrimary.withOpacity(0.8),
                           ),
                         ),
                         Row(
@@ -97,13 +100,14 @@ class WalletDepositSheet {
                             Icon(
                               Icons.account_balance,
                               size: 18,
-                              color: colors.primary,
+                              color: isLight
+                                  ? const Color(0xFF2B124C)
+                                  : const Color(0xFF632AAE),
                             ),
                             const SizedBox(width: 5),
                             Text(
                               "Access Bank",
                               style: TextStyle(
-                                color: colors.textPrimary,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -120,13 +124,11 @@ class WalletDepositSheet {
                         Text(
                           "Account Name",
                           style: TextStyle(
-                            color: colors.textPrimary.withOpacity(0.8),
                           ),
                         ),
                         Text(
                           "Engr Unwana",
                           style: TextStyle(
-                            color: colors.textPrimary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -159,7 +161,9 @@ class WalletDepositSheet {
                 height: 48,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: colors.primary,
+                    backgroundColor: isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

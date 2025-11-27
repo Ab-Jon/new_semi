@@ -24,6 +24,7 @@ class _DrawerContentState extends State<DrawerContent> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     final Size screen = MediaQuery.of(context).size;
     final double maxDrawerWidth = (screen.width * 0.68).clamp(240.0, 320.0);
     final double minDrawerWidth = 80.0;
@@ -40,16 +41,20 @@ class _DrawerContentState extends State<DrawerContent> {
             _isCollapsed
                 ? CircleAvatar(
               radius: 20,
-              backgroundImage: const AssetImage('assets/avatar.png'),
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundImage: const AssetImage('assets/avatar_1.jpg'),
+              backgroundColor: isLight
+                  ? const Color(0xFF2B124C)
+                  : const Color(0xFF632AAE),
             )
                 : Row(
               children: [
                 const SizedBox(width: 12),
                 CircleAvatar(
                   radius: 28,
-                  backgroundImage: const AssetImage('assets/avatar.png'),
-                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  backgroundImage: const AssetImage('assets/avatar_1.jpg'),
+                  backgroundColor: isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -68,7 +73,9 @@ class _DrawerContentState extends State<DrawerContent> {
                     ],
                   ),
                 ),
-                const Icon(Ionicons.chevron_down, color: Colors.grey),
+                Icon(Ionicons.chevron_down, color: isLight
+                    ? const Color(0xFF2B124C)
+                    : const Color(0xFF632AAE)),
               ],
             ),
             const SizedBox(height: 20),
@@ -81,7 +88,9 @@ class _DrawerContentState extends State<DrawerContent> {
                   final item = _menu[index];
                   final bool isActive = index == _selectedMenuIndex;
                   return ListTile(
-                    leading: Icon(item['icon'], color: Theme.of(context).colorScheme.primary),
+                    leading: Icon(item['icon'], color: isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE)),
                     title: _isCollapsed ? null : Text(item['label']),
                     selected: isActive,
                     onTap: () {

@@ -54,15 +54,18 @@ class _PhotoPickerPreviewState extends State<PhotoPickerPreview> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: _pickImage,
       child: Container(
         width: double.infinity,
         height: 180,
         decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: isLight
+              ? const Color(0xFF2B124C)
+              : const Color(0xFF632AAE)),
           image: _selectedImage != null
               ? DecorationImage(
             image: FileImage(File(_selectedImage!.path)),

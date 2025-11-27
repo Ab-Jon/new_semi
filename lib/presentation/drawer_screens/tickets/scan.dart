@@ -6,7 +6,7 @@ import 'package:semi_bill/presentation/drawer_screens/tickets/qr_scanner.dart';
 void showTicketModal(BuildContext context, String ticketData) {
   final theme = Theme.of(context);
   final isDark = theme.brightness == Brightness.dark;
-  final Color primaryColor = const Color(0xFF3A0A6A);
+  final isLight = Theme.of(context).brightness == Brightness.light;
 
   showModalBottomSheet(
     context: context,
@@ -39,7 +39,9 @@ void showTicketModal(BuildContext context, String ticketData) {
                   ),
                   child: Icon(
                     Icons.confirmation_number_outlined,
-                    color: primaryColor,
+                    color:  isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                     size: 20,
                   ),
                 ),
@@ -48,7 +50,9 @@ void showTicketModal(BuildContext context, String ticketData) {
                   onTap: () => Navigator.pop(context),
                   child: Icon(
                     Icons.close,
-                    color: theme.textTheme.bodyLarge?.color,
+                    color:  isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                   ),
                 ),
               ],
@@ -84,7 +88,7 @@ void showTicketModal(BuildContext context, String ticketData) {
                   data: ticketData,          // This becomes the scannable value
                   size: 160,
                   version: QrVersions.auto,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                 ),
               ),
             ),
@@ -118,7 +122,9 @@ void showTicketModal(BuildContext context, String ticketData) {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryColor,
+                  backgroundColor:  isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

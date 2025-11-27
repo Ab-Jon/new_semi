@@ -13,20 +13,23 @@ class MyEventsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Event", style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
-        foregroundColor: Colors.black,
+        foregroundColor: Theme.of(context).colorScheme.surface,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigate to Create Event screen
           Navigator.push(context, MaterialPageRoute(builder: (context) => PostEventScreen()));
         },
-        backgroundColor: Colors.purple,
+        backgroundColor: isLight
+            ? const Color(0xFF2B124C)
+            : const Color(0xFF632AAE),
         child: const Icon(Icons.add, color: Colors.white),
       ),
       body: SingleChildScrollView(
@@ -47,9 +50,7 @@ class MyEventsPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 10),
-
             /// Description
             Text(
               "You have no events yet. Click on the (+) add icon to make a post today and control what happens in your event with ease.",

@@ -6,6 +6,7 @@ class CrowdfundPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -22,11 +23,13 @@ class CrowdfundPage extends StatelessWidget {
       ),
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: isLight
+            ? const Color(0xFF2B124C)
+            : const Color(0xFF632AAE),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => PostCrowdPage()));
         },
-        child: Icon(Icons.add, color: Theme.of(context).colorScheme.surface, size: 30),
+        child: Icon(Icons.add, color: Colors.white, size: 30),
       ),
 
       body: SingleChildScrollView(
