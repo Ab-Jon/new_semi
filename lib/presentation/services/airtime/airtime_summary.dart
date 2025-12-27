@@ -48,9 +48,7 @@ class WithdrawalBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 10),
-
           /// Amount Title
           const Text(
             "₦2,000.00",
@@ -59,9 +57,7 @@ class WithdrawalBottomSheet extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 25),
-
           /// INFORMATION SECTION
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -92,9 +88,7 @@ class WithdrawalBottomSheet extends StatelessWidget {
                 amountRow("Amount", "₦2,000.00"),
                 amountRow("Charged Fees", "₦20.00"),
                 amountRow("Recipient receive", "₦1980.00", bold: true),
-
                 const SizedBox(height: 25),
-
                 /// WALLET SECTION
                 Container(
                   padding: const EdgeInsets.all(16),
@@ -170,7 +164,6 @@ class WithdrawalBottomSheet extends StatelessWidget {
       ),
     );
   }
-
   /// Reusable row for top info section
   Widget infoRow({required String label, String? value, Widget? valueWidget}) {
     return Padding(

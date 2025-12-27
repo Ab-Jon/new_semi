@@ -85,7 +85,7 @@ class AirtimeAmountScreen extends StatelessWidget {
                 },
                 child: const Text(
                   'Proceed',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
                 ),
               ),
             ),

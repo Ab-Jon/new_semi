@@ -17,18 +17,17 @@ class _DonateScreenState extends State<DonateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
-
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: false,
         title: const Text(
           "",
-          style: TextStyle(color: Colors.black),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.surface),
       ),
 
       body: SingleChildScrollView(
@@ -39,7 +38,7 @@ class _DonateScreenState extends State<DonateScreen> {
             // IMAGE CARD SECTION
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -55,7 +54,6 @@ class _DonateScreenState extends State<DonateScreen> {
                       fit: BoxFit.cover,
                     ),
                   ),
-
                   Padding(
                     padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -70,20 +68,23 @@ class _DonateScreenState extends State<DonateScreen> {
                           ),
                         ),
                         const SizedBox(height: 6),
-
                         Row(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "Victory Estate, Lagos",
                               style: TextStyle(color: Colors.grey, fontSize: 13),
                             ),
-                            Spacer(),
-                            Icon(Icons.favorite, color: Colors.purple, size: 16),
-                            SizedBox(width: 4),
+                            const Spacer(),
+                            Icon(Icons.favorite, color: isLight
+                                ? const Color(0xFF2B124C)
+                                : const Color(0xFF632AAE), size: 16),
+                            const SizedBox(width: 4),
                             Text(
                               "200+ Supporters",
                               style:
-                              TextStyle(color: Colors.purple, fontSize: 13),
+                              TextStyle(color: isLight
+                                  ? const Color(0xFF2B124C)
+                                  : const Color(0xFF632AAE), fontSize: 13),
                             ),
                           ],
                         ),
@@ -93,16 +94,14 @@ class _DonateScreenState extends State<DonateScreen> {
                 ],
               ),
             ),
-
             const SizedBox(height: 24),
-
             // SELECTED AMOUNT
             Center(
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 width: 180,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: isLight? Colors.grey.shade200 : Colors.black12,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -115,9 +114,7 @@ class _DonateScreenState extends State<DonateScreen> {
                 ),
               ),
             ),
-
             const SizedBox(height: 16),
-
             // AMOUNT CHIPS
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,12 +129,16 @@ class _DonateScreenState extends State<DonateScreen> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? const Color(0xFFE8D9FF)
+                          ? isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE)
                           : Colors.white,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: isSelected
-                            ? const Color(0xFF6A1B9A)
+                            ? isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE)
                             : Colors.grey.shade300,
                       ),
                     ),
@@ -145,8 +146,8 @@ class _DonateScreenState extends State<DonateScreen> {
                       "₦$amount",
                       style: TextStyle(
                         color: isSelected
-                            ? const Color(0xFF6A1B9A)
-                            : Colors.black,
+                            ? Colors.white
+                            : isLight? Colors.black : Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -170,9 +171,7 @@ class _DonateScreenState extends State<DonateScreen> {
                 ),
               ),
             ),
-
             const SizedBox(height: 16),
-
             // MESSAGE FIELD
             TextField(
               controller: messageCtrl,
@@ -187,9 +186,7 @@ class _DonateScreenState extends State<DonateScreen> {
                 ),
               ),
             ),
-
             const SizedBox(height: 16),
-
             // ANONYMOUS CHECKBOX
             Row(
               children: [
@@ -198,20 +195,20 @@ class _DonateScreenState extends State<DonateScreen> {
                   onChanged: (v) {
                     setState(() => anonymous = v!);
                   },
-                  activeColor: const Color(0xFF3A0CA3),
+                  activeColor: isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                 ),
                 const Text("Remain Anonymous"),
               ],
             ),
-
             const SizedBox(height: 20),
-
             // DONATE BUTTON
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3A0CA3),
+                  backgroundColor: isLight ? const Color(0xFF2B124C) : const Color(0xFF632AAE),
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -221,13 +218,13 @@ class _DonateScreenState extends State<DonateScreen> {
                 child: Text(
                   "Donate ₦$selectedAmount",
                   style: const TextStyle(
+                    color: Colors.white,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
-
             const SizedBox(height: 30),
           ],
         ),

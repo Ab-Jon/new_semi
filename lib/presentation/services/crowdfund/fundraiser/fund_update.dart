@@ -5,32 +5,33 @@ class UpdatesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     final updates = [
       {
         "name": "Sir Wise",
         "time": "4hrs ago",
-        "avatar": "https://example.com/avatar1.jpg",
+        "avatar": "https://i.pravatar.cc/100?img=5",
         "text":
         "Small act of kindness is all we all need as humans to love in a worlid as earth. Therefore i enjoi all i mean everyone to give when they have the chance to give. It doesnt take us anything to be decent humans."
       },
       {
         "name": "Uche Jombo",
         "time": "4hrs ago",
-        "avatar": "https://example.com/avatar2.jpg",
+        "avatar": "https://i.pravatar.cc/100?img=8",
         "text":
         "Small act of kindness is all we all need as humans to love in a worlid as earth. Therefore i enjoi all i mean everyone to give when they have the chance to give. It doesnt take us anything to be decent humans."
       },
       {
         "name": "Confucius",
         "time": "4hrs ago",
-        "avatar": "https://example.com/avatar3.jpg",
+        "avatar": "https://i.pravatar.cc/100?img=5",
         "text":
         "Small act of kindness is all we all need as humans to love in a worlid as earth. Therefore i enjoi all i mean everyone to give when they have the chance to give. It doesnt take us anything to be decent humans."
       },
       {
         "name": "Sir Unwana",
         "time": "4hrs ago",
-        "avatar": "https://example.com/avatar4.jpg",
+        "avatar": "https://i.pravatar.cc/100?img=5",
         "text":
         "Small act of kindness is all we all need as humans to love in a worlid as earth. Therefore i enjoi all i mean everyone to give when they have the chance to give. It doesnt take us anything to be decent humans."
       },
@@ -100,7 +101,7 @@ class UpdatesTab extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF3A0CA3),
+                backgroundColor: isLight ? const Color(0xFF2B124C) : const Color(0xFF632AAE),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

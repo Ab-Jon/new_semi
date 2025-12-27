@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:semi_bill/presentation/services/crowdfund/fundraiser/fund_raise.dart';
+import 'package:semi_bill/presentation/services/crowdfund/fundraiser/fund_tab.dart';
 
 class CrowdfundingPage extends StatelessWidget {
   const CrowdfundingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F4FF),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text('Crowdfunding', style: TextStyle(color: Colors.black)),
+        title: const Text('Crowdfunding'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -37,7 +40,7 @@ class CrowdfundingPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.search),
                       hintText: 'Search',
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: isLight? Colors.grey.shade300 : Colors.black12,
                       contentPadding: const EdgeInsets.symmetric(vertical: 0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -52,7 +55,7 @@ class CrowdfundingPage extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -69,15 +72,15 @@ class CrowdfundingPage extends StatelessWidget {
 
             const SizedBox(height: 20),
             _buildSection('Premium'),
-            _buildGrid(),
+            _buildGrid(context),
 
             const SizedBox(height: 20),
             _buildSection('Recently Added'),
-            _buildGrid(),
+            _buildGrid(context),
 
             const SizedBox(height: 20),
             _buildSection('Campaign of the month'),
-            _buildGrid(),
+            _buildGrid(context),
 
             const SizedBox(height: 20),
             _buildSection('Campaign near you'),
@@ -97,7 +100,8 @@ class CrowdfundingPage extends StatelessWidget {
     );
   }
 
-  Widget _buildGrid() {
+  Widget _buildGrid(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -111,7 +115,7 @@ class CrowdfundingPage extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -138,12 +142,18 @@ class CrowdfundingPage extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const CircleAvatar(radius: 10, backgroundColor: Colors.orange),
+                        CircleAvatar(radius: 10, backgroundColor: isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE)),
                         const SizedBox(width: 5),
                         const Text('120 donors'),
                         const Spacer(),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => CampaignDetailsScreen()
+                            ));
+                          },
                           child: const Text('Donate'),
                         ),
                       ],
@@ -190,7 +200,7 @@ class CrowdfundingPage extends StatelessWidget {
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
-                children: _filters.map((e) => _filterChip(e, e == 'Charity')).toList(),
+                children: _filters.map((e) => _filterChip(e, e == 'Charity', context)).toList(),
               )
             ],
           ),
@@ -211,18 +221,21 @@ class CrowdfundingPage extends StatelessWidget {
     'Sustainability'
   ];
 
-  Widget _filterChip(String label, bool selected) {
+  Widget _filterChip(String label, bool selected, BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: selected ? const Color(0xFF2D0C4E) : Colors.white,
+        color: selected ? isLight
+            ? const Color(0xFF2B124C)
+            : const Color(0xFF632AAE) : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey.shade300),
       ),
       child: Text(
         label,
         style: TextStyle(
-          color: selected ? Colors.white : Colors.black,
+          color: selected ? Colors.white : Theme.of(context).colorScheme.surface,
           fontWeight: FontWeight.w500,
         ),
       ),

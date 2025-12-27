@@ -51,10 +51,8 @@ class _InternetScreenState extends State<InternetScreen>
           children: [
 
             const SizedBox(height: 10),
-
             /// 🔵 TOP BANNER (same as Airtime screen)
             _buildBanner(),
-
             const SizedBox(height: 20),
 
             /// 🔵 INTERNET PROVIDER DROPDOWN

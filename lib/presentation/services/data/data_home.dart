@@ -8,34 +8,27 @@ class DataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         centerTitle: true,
         elevation: 0,
         title: const Text(
           "Airtime",
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: Colors.black,
           ),
         ),
       ),
-
-      backgroundColor: const Color(0xFFF4F4F4),
-
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-
-            // =========================
             // PROMO BANNER CARD
-            // =========================
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -57,9 +50,7 @@ class DataScreen extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-
                   const SizedBox(height: 10),
-
                   // Avatar + Phone + Fav
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -85,7 +76,7 @@ class DataScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           padding: const EdgeInsets.all(6),
-                          child: const Icon(Icons.favorite_outline),
+                          child: Icon(Icons.favorite_outline, color: isLight ? const Color(0xFF2B124C) : const Color(0xFF632AAE),),
                         ),
                       ],
                     ),
@@ -93,12 +84,8 @@ class DataScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
-
-            // =========================
             // SELECT NETWORK CARD
-            // =========================
             _buildSectionCard(
               title: "Select Network",
               child: Row(
@@ -109,14 +96,10 @@ class DataScreen extends StatelessWidget {
                   _networkButton("Airtel", "assets/images/airtel.png"),
                   _networkButton("Glo", "assets/images/glo.png"),
                 ],
-              ),
+              ), context: context,
             ),
-
             const SizedBox(height: 20),
-
-            // =========================
             // SELECT BENEFICIARY CARD
-            // =========================
             _buildSectionCard(
               title: "Select Beneficiary",
               child: Column(
@@ -140,25 +123,22 @@ class DataScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 12),
-
                   _beneficiaryTile("assets/avatar_1.png", "08134243438"),
                   _beneficiaryTile("assets/avatar_1.png", "08134243438"),
                   _beneficiaryTile("assets/avatar_1.png", "08134243438"),
                 ],
-              ),
+              ), context: context,
             ),
-
             const SizedBox(height: 30),
-
             // PROCEED BUTTON
             SizedBox(
               width: double.infinity,
               height: 48,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2B124C),
+                  backgroundColor: isLight ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -173,22 +153,18 @@ class DataScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
-
-  // =========================
   // REUSABLE SECTION CARD
-  // =========================
-  Widget _buildSectionCard({required String title, required Widget child}) {
+  Widget _buildSectionCard({required String title, required Widget child, required BuildContext context}) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -209,10 +185,7 @@ class DataScreen extends StatelessWidget {
       ),
     );
   }
-
-  // =========================
   // NETWORK BUTTON
-  // =========================
   Widget _networkButton(String label, String asset) {
     return Column(
       children: [
@@ -231,10 +204,7 @@ class DataScreen extends StatelessWidget {
       ],
     );
   }
-
-  // =========================
   // BENEFICIARY TILE
-  // =========================
   Widget _beneficiaryTile(String avatar, String number) {
     return Column(
       children: [

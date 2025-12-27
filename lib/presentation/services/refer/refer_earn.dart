@@ -5,36 +5,38 @@ class ReferAndEarnPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: const Text(
           'Refer & Earn',
           style: TextStyle(
-            color: Colors.black,
             fontWeight: FontWeight.w600,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: isLight
+              ? const Color(0xFF2B124C)
+              : const Color(0xFF632AAE),),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black),
+            icon: Icon(Icons.notifications_outlined, color: isLight
+                ? const Color(0xFF2B124C)
+                : const Color(0xFF632AAE)),
             onPressed: () {},
           )
         ],
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // Banner
             Container(
               margin: const EdgeInsets.only(top: 10),
@@ -47,19 +49,19 @@ class ReferAndEarnPage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 16),
-
             // Earnings Card
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.card_giftcard, color: Colors.purple),
+                  Icon(Icons.card_giftcard, color: isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE)),
                   const SizedBox(width: 12),
                   const Text(
                     "700.00",
@@ -88,13 +90,12 @@ class ReferAndEarnPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Row(
                     children: const [
                       CircleAvatar(radius: 12, backgroundImage: AssetImage("assets/user1.png")),
@@ -104,9 +105,7 @@ class ReferAndEarnPage extends StatelessWidget {
                       CircleAvatar(radius: 12, backgroundImage: AssetImage("assets/user3.png")),
                     ],
                   ),
-
                   const SizedBox(height: 12),
-
                   const Text(
                     "Invite Friends",
                     style: TextStyle(
@@ -114,22 +113,20 @@ class ReferAndEarnPage extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-
                   const SizedBox(height: 6),
-
                   const Text(
                     "Invite Friends so that they can earn and enjoy. Enjoy a percentage of the transaction carried out by your referee.",
-                    style: TextStyle(color: Colors.black54, height: 1.4),
+                    style: TextStyle(height: 1.4),
                   ),
-
                   const SizedBox(height: 16),
-
                   // Earn Button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
+                        backgroundColor: isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE),
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -138,7 +135,7 @@ class ReferAndEarnPage extends StatelessWidget {
                       onPressed: () {},
                       child: const Text(
                         "Earn ₦5,000",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
                       ),
                     ),
                   ),
@@ -164,46 +161,49 @@ class ReferAndEarnPage extends StatelessWidget {
                       const SizedBox(width: 12),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple,
+                          backgroundColor: isLight
+                              ? const Color(0xFF2B124C)
+                              : const Color(0xFF632AAE),
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                         onPressed: () {},
-                        child: const Text("Share"),
+                        child: const Text("Share", style: TextStyle(color: Colors.white),),
                       )
                     ],
                   )
                 ],
               ),
             ),
-
             const SizedBox(height: 16),
-
             // Referral Record
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Row(
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Referral Record",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(width: 6),
-                      Icon(Icons.people_alt_outlined, size: 18, color: Colors.grey),
-                      Text(" +20", style: TextStyle(color: Colors.grey)),
+                      const SizedBox(width: 6),
+                      Icon(Icons.people_alt_outlined, size: 18, color: isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE)),
+                      Text(" +20", style: TextStyle(color: isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE))),
                     ],
                   ),
 

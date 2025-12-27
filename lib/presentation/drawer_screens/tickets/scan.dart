@@ -32,16 +32,12 @@ void showTicketModal(BuildContext context, String ticketData) {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withOpacity(0.08)
-                        : Colors.purple.shade50,
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     Icons.confirmation_number_outlined,
-                    color:  isLight
-                        ? const Color(0xFF2B124C)
-                        : const Color(0xFF632AAE),
+                    color: const Color(0xFF2B124C),
                     size: 20,
                   ),
                 ),
@@ -69,13 +65,11 @@ void showTicketModal(BuildContext context, String ticketData) {
                 color: theme.textTheme.bodyLarge?.color,
               ),
             ),
-
             const SizedBox(height: 16),
-
             // Generated QR Code
             Container(
               decoration: BoxDecoration(
-                color: isDark ? Colors.white12 : Colors.grey.shade100,
+                color: Colors.white12,
                 borderRadius: BorderRadius.circular(16),
               ),
               padding: const EdgeInsets.all(20),

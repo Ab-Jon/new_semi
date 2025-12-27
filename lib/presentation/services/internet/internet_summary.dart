@@ -16,7 +16,6 @@ class InternetSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-
     return Scaffold(
       appBar: AppBar(title: const Text('Airtime Details')),
       body: Padding(
@@ -41,7 +40,9 @@ class InternetSummaryScreen extends StatelessWidget {
 
             const SizedBox(height: 12),
             ListTile(
-              leading: const Icon(Icons.account_balance_wallet_outlined),
+              leading: Icon(Icons.account_balance_wallet_outlined, color: isLight
+                  ? const Color(0xFF2B124C)
+                  : const Color(0xFF632AAE),),
               title: const Text('Wallet'),
               subtitle: const Text('₦150.00'),
               trailing: TextButton(

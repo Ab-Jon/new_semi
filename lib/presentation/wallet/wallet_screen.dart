@@ -111,7 +111,7 @@ class _WalletScreenState extends State<WalletScreen> {
         child: Text(
           title,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
+            color: isSelected ? Colors.white : Colors.white54,
             fontWeight: FontWeight.w500,
             fontSize: 16,
           ),
@@ -153,7 +153,6 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -161,8 +160,8 @@ class _WalletScreenState extends State<WalletScreen> {
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: isLight
-                ? const Color(0xFF2B124C)
-                : const Color(0xFF632AAE),
+                ? Colors.black
+                : Colors.white,
           ),
         ),
         centerTitle: true,
@@ -380,12 +379,10 @@ class _WalletScreenState extends State<WalletScreen> {
                       Row(
                         children: [
                           CircleAvatar(
+                            backgroundColor: isLight? Colors.white: Colors.black,
                             radius: 20,
                             child: Icon(
                               item['icon'],
-                              color: isLight
-                                  ? const Color(0xFF2B124C)
-                                  : const Color(0xFF632AAE),
                             ),
                           ),
                           const SizedBox(width: 12),

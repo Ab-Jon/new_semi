@@ -49,14 +49,11 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-
-            // ==============================
             // TOP USER ↔ NETWORK CARD
-            // ==============================
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -80,11 +77,9 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
                       ),
                     ],
                   ),
-
                   Icon(Icons.compare_arrows, size: 28, color: isLight
                       ? const Color(0xFF2B124C)
                       : const Color(0xFF632AAE),),
-
                   // Right network
                   Column(
                     children: [
@@ -102,16 +97,12 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
-
-            // ==============================
             // SELECT DATA PLAN CARD
-            // ==============================
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -121,9 +112,7 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
                     "Select data Plan",
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                   ),
-
                   const SizedBox(height: 10),
-
                   // Search input
                   Container(
                     height: 40,
@@ -142,9 +131,7 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 15),
-
                   // Tabs
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,9 +166,7 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
                       );
                     }),
                   ),
-
                   const SizedBox(height: 20),
-
                   // GRID OF DATA PLANS
                   GridView.builder(
                     shrinkWrap: true,
@@ -196,7 +181,6 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
                     itemBuilder: (context, index) {
                       final item = dailyPlans[index];
                       final isSelected = selectedPlanIndex == index;
-
                       return GestureDetector(
                         onTap: () => setState(() => selectedPlanIndex = index),
                         child: Container(
@@ -234,9 +218,7 @@ class _DataDetailsScreenState extends State<DataDetailsScreen> {
                 ],
               ),
             ),
-
             const SizedBox(height: 25),
-
             // PROCEED BUTTON
             SizedBox(
               width: double.infinity,

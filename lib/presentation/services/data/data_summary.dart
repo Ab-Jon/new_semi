@@ -38,20 +38,19 @@ class DataSummaryScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 12),
             ListTile(
               leading: const Icon(Icons.account_balance_wallet_outlined),
               title: const Text('Wallet'),
               subtitle: const Text('₦150.00'),
               trailing: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  //Todo Add money functionality
+                },
                 child: const Text('Add Money'),
               ),
             ),
-
             const Spacer(),
-
             SizedBox(
               width: double.infinity,
               height: 52,

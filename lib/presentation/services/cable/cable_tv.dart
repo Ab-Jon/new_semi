@@ -5,15 +5,15 @@ class CableTvPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F4FF),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: true,
         title: const Text(
           'Cable Tv',
-          style: TextStyle(color: Colors.black),
         ),
       ),
       body: SingleChildScrollView(
@@ -36,7 +36,6 @@ class CableTvPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -44,7 +43,7 @@ class CableTvPage extends StatelessWidget {
                 children: [
                   const Text('Select Cable'),
                   const SizedBox(height: 5),
-                  _buildDropdown(['DSTV', 'GOTV', 'StarTimes']),
+                  _buildDropdown(['DSTV', 'GOTV', 'StarTimes'], context),
 
                   const SizedBox(height: 15),
                   const Text('Decoder Number'),
@@ -54,7 +53,7 @@ class CableTvPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   const Text('Viewing Package'),
                   const SizedBox(height: 5),
-                  _buildDropdown(['DSTV Access', 'DSTV Premium', 'Compact']),
+                  _buildDropdown(['DSTV Access', 'DSTV Premium', 'Compact'], context),
 
                   const SizedBox(height: 15),
                   const Text('Name'),
@@ -64,7 +63,7 @@ class CableTvPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   const Text('Select Pricing Option'),
                   const SizedBox(height: 5),
-                  _buildDropdown(['Weekly', 'Monthly', 'Yearly']),
+                  _buildDropdown(['Weekly', 'Monthly', 'Yearly'], context),
 
                   const SizedBox(height: 15),
                   const Text('Amount'),
@@ -81,14 +80,16 @@ class CableTvPage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2D0C4E),
+                  backgroundColor: isLight
+                      ? const Color(0xFF2B124C)
+                      : const Color(0xFF632AAE),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 onPressed: () {},
-                child: const Text('Make Payment', style: TextStyle(fontSize: 16)),
+                child: const Text('Make Payment', style: TextStyle(fontSize: 16, color: Colors.white)),
               ),
             )
           ],
@@ -97,11 +98,12 @@ class CableTvPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDropdown(List<String> items) {
+  Widget _buildDropdown(List<String> items, BuildContext context) {
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: Theme.of(context).colorScheme.surface),
         borderRadius: BorderRadius.circular(6),
       ),
       child: DropdownButtonHideUnderline(

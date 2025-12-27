@@ -10,6 +10,7 @@ import 'package:semi_bill/presentation/services/electricity/electricity_screen.d
 import 'package:semi_bill/presentation/services/gift/gift_user.dart';
 import 'package:semi_bill/presentation/services/internet/internet_screen.dart';
 import 'package:semi_bill/presentation/services/refer/refer_earn.dart';
+import 'package:semi_bill/presentation/services/tickets/event_tickets.dart';
 
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({super.key});
@@ -48,7 +49,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     {'icon': Ionicons.gift_outline, 'title': 'Gift User', 'route': GiftUserPage()},
     {'icon': Ionicons.globe_outline, 'title': 'Internet', 'route': InternetScreen()},
     {'icon': Ionicons.people_outline, 'title': 'Refer & Earn', 'route': ReferAndEarnPage()},
-    {'icon': Ionicons.ticket_outline, 'title': 'Tickets'},
+    {'icon': Ionicons.ticket_outline, 'title': 'Tickets', 'route': EventsScreen()},
     {'icon': Ionicons.cash_outline, 'title': 'Crowd Funding', 'route': CrowdfundingPage()},
   ];
 

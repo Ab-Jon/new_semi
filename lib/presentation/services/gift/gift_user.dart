@@ -16,17 +16,20 @@ class _GiftUserPageState extends State<GiftUserPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: const Text("Gift User"),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         foregroundColor: Colors.black,
         actions: [
           IconButton(
-            icon: const Icon(Ionicons.notifications_outline),
+            icon: Icon(Ionicons.notifications_outline, color: isLight
+                ? const Color(0xFF2B124C)
+                : const Color(0xFF632AAE),),
             onPressed: () {},
           )
         ],
@@ -45,14 +48,12 @@ class _GiftUserPageState extends State<GiftUserPage> {
                 fit: BoxFit.cover,
               ),
             ),
-
             const SizedBox(height: 16),
-
             /// FORM CARD
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -62,7 +63,6 @@ class _GiftUserPageState extends State<GiftUserPage> {
                   const Text("Recipient ID",
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-
                   TextField(
                     decoration: InputDecoration(
                       hintText: "Enter your SensiBill User ID",
@@ -74,9 +74,7 @@ class _GiftUserPageState extends State<GiftUserPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
                   /// DESCRIPTION
                   const Text("Description",
                       style: TextStyle(fontWeight: FontWeight.bold)),
@@ -131,7 +129,9 @@ class _GiftUserPageState extends State<GiftUserPage> {
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: selectedAmount == amount
-                                ? Colors.deepPurple
+                                ? isLight
+                                ? const Color(0xFF2B124C)
+                                : const Color(0xFF632AAE)
                                 : Colors.grey.shade300,
                             width: 2,
                           ),
@@ -157,16 +157,17 @@ class _GiftUserPageState extends State<GiftUserPage> {
             ),
 
             const SizedBox(height: 20),
-
             /// MAKE PAYMENT BUTTON
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                     padding: const EdgeInsets.symmetric(vertical: 14)),
                 onPressed: () {},
-                child: const Text("Make Payment"),
+                child: const Text("Make Payment", style: TextStyle(color: Colors.white),),
               ),
             ),
           ],

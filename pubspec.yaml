@@ -42,6 +42,7 @@ dependencies:
   qr_flutter: ^4.1.0
   image_picker: ^1.2.1
   share_plus: ^12.0.1
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:
@@ -72,9 +73,16 @@ flutter:
    - assets/images/9mobile.png
    - assets/images/airtel.png
    - assets/images/glo.png
+   - assets/icons/facebook.png
+   - assets/icons/instagram.png
+   - assets/icons/telegram.png
+   - assets/icons/whatsapp.png
    - assets/access.png
    - assets/avatar_1.jpg
    - assets/zenith.png
+   - assets/event.jpg
+   - assets/map.jpeg
+   - assets/2fa.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -16,12 +16,13 @@ class _BettingPageState extends State<BettingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Betting"),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         foregroundColor: Colors.black,
       ),
@@ -39,14 +40,12 @@ class _BettingPageState extends State<BettingPage> {
                 fit: BoxFit.cover,
               ),
             ),
-
             const SizedBox(height: 16),
-
             /// FORM CARD
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -56,11 +55,12 @@ class _BettingPageState extends State<BettingPage> {
                   const Text("Bet Provider",
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
+                      border: Border.all(color: isLight
+                          ? const Color(0xFF2B124C)
+                          : const Color(0xFF632AAE)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: DropdownButtonHideUnderline(
@@ -71,7 +71,9 @@ class _BettingPageState extends State<BettingPage> {
                           value: p,
                           child: Row(
                             children: [
-                              const Icon(Ionicons.shield_checkmark),
+                              Icon(Ionicons.shield_checkmark, color: isLight
+                                  ? const Color(0xFF2B124C)
+                                  : const Color(0xFF632AAE),),
                               const SizedBox(width: 8),
                               Text(p),
                             ],
@@ -84,9 +86,7 @@ class _BettingPageState extends State<BettingPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
                   /// USER ID
                   const Text("User ID",
                       style: TextStyle(fontWeight: FontWeight.bold)),
@@ -95,24 +95,19 @@ class _BettingPageState extends State<BettingPage> {
                     decoration: InputDecoration(
                       hintText: "Enter your Sporty Bet User ID",
                       filled: true,
-                      fillColor: const Color(0xFFF4F5F7),
+                      fillColor: Theme.of(context).colorScheme.surfaceBright,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
                   /// AMOUNT RANGE
                   const Text("Amount to pay",
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
-                  const Text("₦ 50 - 500,000",
-                      style: TextStyle(color: Colors.grey)),
-
+                  const Text("₦ 50 - 500,000"),
                   const SizedBox(height: 12),
-
                   /// PRESET AMOUNTS
                   Wrap(
                     spacing: 10,
@@ -127,7 +122,9 @@ class _BettingPageState extends State<BettingPage> {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: selectedAmount == amount
-                                ? Colors.deepPurple
+                                ? isLight
+                                ? const Color(0xFF2B124C)
+                                : const Color(0xFF632AAE)
                                 : Colors.grey.shade300,
                             width: 2,
                           ),
@@ -149,18 +146,18 @@ class _BettingPageState extends State<BettingPage> {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
-
             /// BUTTON
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                     padding: const EdgeInsets.symmetric(vertical: 14)),
                 onPressed: () {},
-                child: const Text("Make Payment"),
+                child: const Text("Make Payment", style: TextStyle(color: Colors.white),),
               ),
             ),
           ],

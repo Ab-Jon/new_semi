@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:semi_bill/presentation/draw_home.dart';
+import 'package:semi_bill/presentation/promo_banner.dart';
 import 'package:semi_bill/presentation/wallet/transfer/gift_user_page.dart';
 import 'package:semi_bill/presentation/wallet/wallet_bottom_sheet.dart';
 import 'package:semi_bill/presentation/wallet/withdrawal_screen.dart';
@@ -185,7 +186,7 @@ class WalletDashboardScreen extends ConsumerWidget {
                 mainAxisSpacing: 15,
                 children: [
                   _serviceItem(
-                    Ionicons.phone_portrait_outline,
+                    Ionicons.call_outline,
                     "Airtime",
                     context,
                   ),
@@ -201,12 +202,7 @@ class WalletDashboardScreen extends ConsumerWidget {
               const SizedBox(height: 40),
 
               // Promo Banner
-              _promoBanner(
-                title: "Get 10% Free on airtime.",
-                subtitle: "Stay updated with new features and benefits",
-                buttonLabel: "Learn more",
-                context: context,
-              ),
+              PromoBannerSlider(),
               const SizedBox(height: 25),
 
               // Recent Transactions
@@ -244,12 +240,7 @@ class WalletDashboardScreen extends ConsumerWidget {
               const SizedBox(height: 25),
 
               // Second Promo
-              _promoBanner(
-                title: "Get 10% Free on airtime.",
-                subtitle: "Stay updated with new features and benefits",
-                buttonLabel: "Apply Now",
-                context: context,
-              ),
+              PromoBannerSlider(),
               const SizedBox(height: 30),
 
               // Report Section
@@ -262,12 +253,12 @@ class WalletDashboardScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _reportButton(
-                    Icons.description_outlined,
+                    Icons.call_outlined,
                     "Statement",
                     context,
                   ),
-                  _reportButton(Icons.history, "Dispute History", context),
-                  _reportButton(Icons.bar_chart, "Statistics", context),
+                  _reportButton(Icons.history_outlined, "Dispute History", context),
+                  _reportButton(Icons.bar_chart_outlined, "Statistics", context),
                 ],
               ),
               const SizedBox(height: 30), // reduced from 80 to 30
@@ -336,63 +327,6 @@ class WalletDashboardScreen extends ConsumerWidget {
           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
         ),
       ],
-    );
-  }
-
-  Widget _promoBanner({
-    required String title,
-    required String subtitle,
-    required String buttonLabel,
-    required BuildContext context,
-  }) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: isLight
-            ? const Color(0xFF2B124C) // LIGHT MODE background
-            : const Color(0xFF632AAE), // DARK MODE background
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white, // ALWAYS white text
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 13,
-              color: Colors.white, // ALWAYS white
-            ),
-          ),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              Text(
-                buttonLabel,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white, // ALWAYS white
-                ),
-              ),
-              const Icon(
-                Icons.arrow_right_alt,
-                color: Colors.white, // ALWAYS white icon
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 
@@ -471,18 +405,20 @@ class WalletDashboardScreen extends ConsumerWidget {
           borderRadius: BorderRadius.circular(12),
           // Optional: add background color here if needed
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Row(
           children: [
             Icon(icon, color: iconColor),
-            const SizedBox(height: 5),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: textColor,
+            const SizedBox(width: 5),
+            Expanded(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: textColor,
+                ),
               ),
             ),
           ],

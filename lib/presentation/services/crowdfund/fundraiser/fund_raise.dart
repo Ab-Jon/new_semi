@@ -5,6 +5,7 @@ class FundraiserDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -15,40 +16,32 @@ class FundraiserDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // --- TOP TAB BAR (Overview | Updates | Comments) ---
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Overview", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text("Updates", style: TextStyle(fontSize: 16, color: Colors.grey)),
-                      Text("Comments", style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    ],
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text("Overview", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                //       Text("Updates", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                //       Text("Comments", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                //     ],
+                //   ),
+                // ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network('https://images.pexels.com/photos/3184413/pexels-photo-3184413.jpeg',
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
                 ),
-
-                // --- TOP BIG IMAGE ---
-                Container(
-                  height: 220,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/brothers.png"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-
                 const SizedBox(height: 16),
-
                 // Days left
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text("18 days left", style: TextStyle(color: Colors.grey, fontSize: 14)),
                 ),
-
                 const SizedBox(height: 4),
-
                 // Title
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -57,15 +50,13 @@ class FundraiserDetailsScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
                 // --- SHARE + DONATION CARD ---
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2)),
@@ -75,7 +66,7 @@ class FundraiserDetailsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Spread the word on", style: TextStyle(fontSize: 14, color: Colors.black54)),
+                        Text("Spread the word on", style: TextStyle(fontSize: 14)),
                         const SizedBox(height: 12),
 
                         Row(
@@ -89,9 +80,7 @@ class FundraiserDetailsScreen extends StatelessWidget {
                             Image.asset("assets/icons/whatsapp.png", height: 26),
                           ],
                         ),
-
                         const SizedBox(height: 16),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -99,33 +88,35 @@ class FundraiserDetailsScreen extends StatelessWidget {
                             Text("1500 Left", style: TextStyle(color: Colors.grey)),
                           ],
                         ),
-
                         const SizedBox(height: 8),
-
                         Row(
                           children: [
                             Text("Last Donation: 6 days ago", style: TextStyle(color: Colors.grey)),
                             Spacer(),
-                            Icon(Icons.people, size: 18, color: Colors.orange),
+                            Icon(Icons.people, size: 18, color: isLight
+                                ? const Color(0xFF2B124C)
+                                : const Color(0xFF632AAE)),
                             SizedBox(width: 4),
-                            Text("120 donors", style: TextStyle(color: Colors.black87)),
+                            Text("120 donors"),
                           ],
                         ),
                       ],
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 24),
-
                 // --- SECOND TAB BAR (Campaign Details | About the Fundraiser) ---
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TabBar(
-                    labelColor: Colors.black,
+                    labelColor: isLight
+                        ? Colors.black12
+                        : Colors.white,
                     unselectedLabelColor: Colors.grey,
                     labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    indicatorColor: Color(0xFF3A0CA3),
+                    indicatorColor: isLight
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                     indicatorWeight: 2.4,
                     tabs: const [
                       Tab(text: "Campaign Details"),
@@ -133,7 +124,6 @@ class FundraiserDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 SizedBox(
                   height: 350,
                   child: TabBarView(
@@ -156,7 +146,6 @@ class FundraiserDetailsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       // --- TAB 2: About Fundraiser ---
                       Padding(
                         padding: const EdgeInsets.all(16),
@@ -178,19 +167,21 @@ class FundraiserDetailsScreen extends StatelessWidget {
                                   ],
                                 ),
                                 Spacer(),
-                                Text("View Profile", style: TextStyle(color: Color(0xFF3A0CA3), fontWeight: FontWeight.bold)),
+                                Text("View Profile", style: TextStyle( fontWeight: FontWeight.bold)),
                               ],
                             ),
-
                             const SizedBox(height: 16),
-
                             const Text(
                               "Brother’s Gatherine",
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 8),
                             const Text(
-                              "Mr Judeen is a Passionate about fostering faith and community, I blend RCCG teachings with the power of faith to transform lives. Together, we grow in Christ, embracing love, service, and spiritual wisdom in our daily lives. Let's journey in faith and purpose as one church and family.",
+                              "Mr Judeen is a Passionate about fostering faith and community, "
+                                  "I blend RCCG teachings with the power of faith to transform lives."
+                                  " Together, we grow in Christ, embracing love, service, "
+                                  "and spiritual wisdom in our daily lives. "
+                                  "Let's journey in faith and purpose as one church and family.",
                               style: TextStyle(fontSize: 15, height: 1.45),
                             ),
                           ],
@@ -199,9 +190,7 @@ class FundraiserDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 20),
-
+                const SizedBox(height: 10),
                 // --- DONATE BUTTON ---
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -209,7 +198,9 @@ class FundraiserDetailsScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF3A0CA3),
+                        backgroundColor: isLight
+                            ? const Color(0xFF2B124C)
+                            : const Color(0xFF632AAE),
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       ),
@@ -221,8 +212,7 @@ class FundraiserDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
               ],
             ),
           ),

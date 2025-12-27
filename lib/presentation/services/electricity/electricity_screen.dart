@@ -36,7 +36,6 @@ class _CableTvScreenState extends State<ElectricityScreen> {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface, // close to the purple shown
       appBar: AppBar(
@@ -46,7 +45,6 @@ class _CableTvScreenState extends State<ElectricityScreen> {
         elevation: 0,
         foregroundColor: Colors.black,
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Column(
@@ -61,9 +59,7 @@ class _CableTvScreenState extends State<ElectricityScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-
             const SizedBox(height: 15),
-
             /// WHITE MAIN CONTAINER
             Container(
               width: double.infinity,
@@ -84,7 +80,6 @@ class _CableTvScreenState extends State<ElectricityScreen> {
                     ),
                   ),
                   const SizedBox(height: 6),
-
                   /// DROPDOWN
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -109,16 +104,13 @@ class _CableTvScreenState extends State<ElectricityScreen> {
                       },
                     ),
                   ),
-
                   const SizedBox(height: 18),
-
                   /// METER NUMBER LABEL
                   const Text(
                     "Metre Number",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 6),
-
                   /// TEXTFIELD
                   TextField(
                     decoration: InputDecoration(
@@ -132,23 +124,18 @@ class _CableTvScreenState extends State<ElectricityScreen> {
                     ),
                     onChanged: (v) => meterNumber = v,
                   ),
-
                   const SizedBox(height: 18),
-
                   /// AMOUNT LABEL
                   const Text(
                     "Amount to pay",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 4),
-
                   const Text(
                     "N 50 - 500,000",
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
-
                   const SizedBox(height: 12),
-
                   /// GRID OF AMOUNTS
                   GridView.builder(
                     shrinkWrap: true,
@@ -187,7 +174,7 @@ class _CableTvScreenState extends State<ElectricityScreen> {
                                 item["amount"],
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: isSelected ? Colors.white : Theme.of(context).colorScheme.surface,
+                                  color: isSelected ? Colors.white : isLight? Colors.black: Colors.white,
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -195,7 +182,7 @@ class _CableTvScreenState extends State<ElectricityScreen> {
                                 item["unit"],
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: isSelected ? Colors.white70 : Theme.of(context).colorScheme.surface,
+                                  color: isSelected ? Colors.white70 : isLight? Colors.black: Colors.white,
                                 ),
                               ),
                             ],
