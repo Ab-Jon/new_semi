@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CableTvPage extends StatelessWidget {
-  const CableTvPage({super.key});
+import '../airtime/airtime_summary.dart';
+
+class CableTvScreen extends StatelessWidget {
+  const CableTvScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,119 +14,177 @@ class CableTvPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Cable Tv',
+          style: TextStyle(
+            color: isLight? Colors.black: Colors.white,
+            fontWeight: FontWeight.w500,
+          ),
         ),
+        iconTheme: IconThemeData(color: isLight? Colors.black : Colors.white),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Banner Image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // White form container
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Select Cable'),
-                  const SizedBox(height: 5),
-                  _buildDropdown(['DSTV', 'GOTV', 'StarTimes'], context),
-
-                  const SizedBox(height: 15),
-                  const Text('Decoder Number'),
-                  const SizedBox(height: 5),
-                  _buildTextField('Enter decoder number'),
-
-                  const SizedBox(height: 15),
-                  const Text('Viewing Package'),
-                  const SizedBox(height: 5),
-                  _buildDropdown(['DSTV Access', 'DSTV Premium', 'Compact'], context),
-
-                  const SizedBox(height: 15),
-                  const Text('Name'),
-                  const SizedBox(height: 5),
-                  _buildTextField('Customer name'),
-
-                  const SizedBox(height: 15),
-                  const Text('Select Pricing Option'),
-                  const SizedBox(height: 5),
-                  _buildDropdown(['Weekly', 'Monthly', 'Yearly'], context),
-
-                  const SizedBox(height: 15),
-                  const Text('Amount'),
-                  const SizedBox(height: 5),
-                  _buildTextField('0.00'),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
-            // Payment Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isLight
-                      ? const Color(0xFF2B124C)
-                      : const Color(0xFF632AAE),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text('Make Payment', style: TextStyle(fontSize: 16, color: Colors.white)),
-              ),
-            )
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _bannerImage(),
+              const SizedBox(height: 20),
+              _formCard(context),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildDropdown(List<String> items, BuildContext context) {
+  Widget _bannerImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Image.network(
+        'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg',
+        height: 120,
+        width: double.infinity,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
 
+  Widget _formCard(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isLight? Colors.white: Colors.black,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _label('Select Cable'),
+          _dropdownField('DSTV', context),
+          const SizedBox(height: 16),
+
+          _label('Decoder Number'),
+          _inputField('Enter decoder number', context),
+          const SizedBox(height: 16),
+
+          _label('Viewing Package'),
+          _dropdownField('DSTV Access', context),
+          const SizedBox(height: 16),
+
+          _label('Name'),
+          _inputField('Customer name', context),
+          const SizedBox(height: 16),
+
+          _label('Select Pricing Option'),
+          _dropdownField('Select Pricing Option', context),
+          const SizedBox(height: 16),
+
+          _label('Amount'),
+          const SizedBox(height: 8),
+
+          _paymentButton(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _label(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+
+  Widget _inputField(String hint, BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+    return Container(
+      height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.surface),
-        borderRadius: BorderRadius.circular(6),
+        color: isLight? Colors.grey.shade100: Colors.black54,
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          items: items.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
-          onChanged: (v) {},
-          hint: const Text('Select'),
+      alignment: Alignment.centerLeft,
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(color: isLight? Colors.black:Colors.grey),
+          border: InputBorder.none,
         ),
       ),
     );
   }
 
-  Widget _buildTextField(String hint) {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: hint,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
+  Widget _dropdownField(String value, BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+    return Container(
+      height: 48,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: isLight? Colors.grey.shade100: Colors.black54,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Text(
+            value,
+            style: TextStyle(color: isLight? Colors.black: Colors.white),
+          ),
+          const Spacer(),
+          const Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _paymentButton(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isLight
+                       ? const Color(0xFF2B124C)
+                       : const Color(0xFF632AAE),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          elevation: 0,
+        ),
+        onPressed: () {
+          showWithdrawalSheet(context);
+        },
+        child: const Text(
+          'Make Payment',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
         ),
       ),
     );
   }
 }
+
+

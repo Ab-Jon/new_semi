@@ -26,6 +26,11 @@ class SettingsScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
+            Divider(
+              height: 1,
+              thickness: 0.4,
+              color: Colors.grey.shade300,
+            ),
 
             /// Profile Card
             Padding(
@@ -115,7 +120,7 @@ class SettingsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color:isLight? Colors.white: Colors.black54,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -224,13 +229,13 @@ class SettingsScreen extends StatelessWidget {
                   height: 36,
                   width: 36,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF632AAE).withOpacity(0.12),
+                    color: isLight? Color(0xFF2B124C).withOpacity(0.12): Colors.black54,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     icon,
                     size: 18,
-                    color: const Color(0xFF632AAE),
+                    color: isLight? Color(0xFF2B124C): Color(0xFF632AAE),
                   ),
                 ),
 
@@ -264,8 +269,8 @@ class SettingsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Divider(
               height: 1,
-              thickness: 0.4,
-              color: Colors.grey.shade300,
+              thickness: 0.2,
+              color: Colors.black54,
             ),
           ),
       ],

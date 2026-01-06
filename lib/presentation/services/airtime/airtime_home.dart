@@ -20,11 +20,7 @@ class AirtimeScreen extends StatelessWidget {
           ),
         ),
       ),
-
-      backgroundColor: isLight
-          ? const Color(0xFF2B124C)
-          : const Color(0xFF632AAE),
-
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -66,6 +62,8 @@ class AirtimeScreen extends StatelessWidget {
                           radius: 20,
                           backgroundImage: AssetImage("assets/avatar_1.png"),
                         ),
+                        const SizedBox(width: 10),
+                        Icon(Icons.arrow_drop_down, color: isLight? Colors.black54: Colors.white),
                         const SizedBox(width: 10),
                         const Expanded(
                           child: Text(
@@ -154,7 +152,7 @@ class AirtimeScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AirtimeAmountScreen(phone: "", network: "")));
+                  MaterialPageRoute(builder: (context) => AirtimeDetailsScreen()));
                 },
                 child: const Text(
                   "Proceed",

@@ -10,28 +10,26 @@ import 'package:semi_bill/presentation/wallet/withdrawal_screen.dart';
 
 class WalletDashboardScreen extends ConsumerWidget {
   WalletDashboardScreen({super.key});
-
   final balanceVisibilityProvider = StateProvider<bool>((ref) => true);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF121212) // DARK MODE
-          : const Color(0xFFF8F8F8),
+          ? Colors.black54 // DARK MODE
+          : Colors.white54,
       drawer: const DrawerContent(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF121212) // DARK MODE
-            : const Color(0xFFF8F8F8), // LIGHT MODE
+            ? Colors.black54 // DARK MODE
+            : Colors.white54, // LIGHT MODE
         elevation: 0,
-
         iconTheme: IconThemeData(
           color: Theme.of(context).brightness == Brightness.dark
               ? Colors.white
               : Colors.black,
         ),
-
         actions: [
           IconButton(
             onPressed: () {},
@@ -54,7 +52,6 @@ class WalletDashboardScreen extends ConsumerWidget {
           const SizedBox(width: 8),
         ],
       ),
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -62,24 +59,30 @@ class WalletDashboardScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Greeting
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Hi, Ubokobong",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                  Row(
-                    children: const [
-                      Icon(Icons.flag_outlined, color: Colors.grey),
-                      SizedBox(width: 6),
-                      Text("EN", style: TextStyle(fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                ],
+              Container(
+                height: 30.0,
+                decoration: BoxDecoration(
+                  color: isLight? Colors.white : Colors.black54,
+                  borderRadius: BorderRadius.circular(14)
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Hi, Ubokobong",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    Row(
+                      children: const [
+                        Icon(Icons.flag_outlined, color: Colors.grey),
+                        SizedBox(width: 6),
+                        Text("EN", style: TextStyle(fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
-
               // Balance Card
               Container(
                 padding: const EdgeInsets.all(20),
@@ -117,13 +120,7 @@ class WalletDashboardScreen extends ConsumerWidget {
                               Center(
                                 child: IconButton(
                                   onPressed: () {
-                                    ref
-                                            .read(
-                                              balanceVisibilityProvider
-                                                  .notifier,
-                                            )
-                                            .state =
-                                        !isVisible;
+                                    ref.read(balanceVisibilityProvider.notifier).state = !isVisible;
                                   },
                                   icon: Icon(
                                     isVisible
@@ -137,9 +134,7 @@ class WalletDashboardScreen extends ConsumerWidget {
                         },
                       ),
                     ),
-
                     const SizedBox(height: 20),
-
                     // Action Buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -171,7 +166,6 @@ class WalletDashboardScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-
               // Services
               const Text(
                 "Services",
@@ -200,11 +194,9 @@ class WalletDashboardScreen extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 40),
-
               // Promo Banner
               PromoBannerSlider(),
               const SizedBox(height: 25),
-
               // Recent Transactions
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -275,6 +267,7 @@ class WalletDashboardScreen extends ConsumerWidget {
     String label,
     VoidCallback onTap,
   ) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -284,11 +277,13 @@ class WalletDashboardScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+              color: isLight ? Colors.white: Colors.black54,
                 borderRadius: BorderRadius.circular(12)),
             child: Icon(
               icon,
-              color: Theme.of(context).colorScheme.primary,
+              color:  isLight
+                  ? const Color(0xFF2B124C)
+                  : const Color(0xFF632AAE),
               size: 26,
             ),
           ),
@@ -301,7 +296,6 @@ class WalletDashboardScreen extends ConsumerWidget {
 
   Widget _serviceItem(IconData icon, String title, BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -309,7 +303,7 @@ class WalletDashboardScreen extends ConsumerWidget {
           child: Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+              color: isLight ? Colors.white : Colors.black,
                 borderRadius: BorderRadius.circular(12)),
             child: Icon(
               icon,

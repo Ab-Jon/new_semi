@@ -43,8 +43,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
   final List<Map<String, dynamic>> services = [
     {'icon': Ionicons.call_outline, 'title': 'Buy Airtime', 'route': AirtimeScreen()},
     {'icon': Ionicons.wifi_outline, 'title': 'Buy Data', 'route': DataScreen()},
-    {'icon': Ionicons.tv_outline, 'title': 'Pay Cable Tv', 'route': CableTvPage()},
-    {'icon': Ionicons.game_controller_outline, 'title': 'Betting', 'route': BettingPage()},
+    {'icon': Ionicons.tv_outline, 'title': 'Pay Cable Tv', 'route': CableTvScreen()},
+    {'icon': Ionicons.game_controller_outline, 'title': 'Betting', 'route': BettingScreen()},
     {'icon': Ionicons.flash_outline, 'title': 'Electricity', 'route': ElectricityScreen()},
     {'icon': Ionicons.gift_outline, 'title': 'Gift User', 'route': GiftUserPage()},
     {'icon': Ionicons.globe_outline, 'title': 'Internet', 'route': InternetScreen()},
