@@ -18,6 +18,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
     final isLight = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
+      backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
       floatingActionButton: selected == "events"
           ? FloatingActionButton(
         onPressed: () {
@@ -71,7 +72,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                   padding: EdgeInsets.all(20),
                   margin: EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color: isLight? Colors.white: const Color(0xFF0F0F0F),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: selected == "tickets"

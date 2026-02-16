@@ -20,6 +20,7 @@ class ServicesScreen extends StatefulWidget {
 }
 
 class _ServicesScreenState extends State<ServicesScreen> {
+
   final PageController _pageController = PageController();
   int _currentPage = 0;
   Timer? _timer;
@@ -87,6 +88,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     final isLight = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
+      backgroundColor: isLight? Colors.grey.shade100 : const Color(0xFF0F0F0F),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -205,9 +207,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
               ),
 
               const SizedBox(height: 25),
-              const Text(
+              Text(
                 "All Services",
                 style: TextStyle(
+                  color: Colors.grey.shade300,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -223,10 +226,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 14,
                   crossAxisSpacing: 14,
-                  childAspectRatio: 1.9,
+                  childAspectRatio: 3.0,
                 ),
                 itemBuilder: (context, index) {
                   final item = services[index];
+
                   return InkWell(
                     onTap: (){
                       Navigator.push(context,
@@ -234,17 +238,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
+                        color: isLight? Colors.white : const Color(0xFF161616),
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withValues(),
-                            blurRadius: 5,
-                            spreadRadius: 1,
-                          ),
-                        ],
                       ),
-                      child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -253,9 +249,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
                               color: isLight
                                   ? const Color(0xFF2B124C)
                                   : const Color(0xFF632AAE),
-                              size: 20,
+                              size: 18,
                             ),
-                            const SizedBox(width: 6),
+                            const SizedBox(width: 8),
                             Flexible(
                               child: Text(
                                 item['title'],
@@ -269,11 +265,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           ],
                         ),
                       ),
-                    ),
                   );
                 },
               ),
-              const SizedBox(height: 40),
+              // const SizedBox(height: 40),
             ],
           ),
         ),

@@ -8,11 +8,11 @@ class CrowdfundPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
         title: Text(
           "Crowdfund",
           style: TextStyle(

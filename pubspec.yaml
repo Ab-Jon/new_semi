@@ -43,6 +43,10 @@ dependencies:
   image_picker: ^1.2.1
   share_plus: ^12.0.1
   font_awesome_flutter: ^10.7.0
+  country_flags: ^4.1.1
+  dio: ^5.9.0
+  flutter_secure_storage: ^10.0.0
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +89,8 @@ flutter:
    - assets/event.jpg
    - assets/map.jpeg
    - assets/2fa.jpg
+   - assets/launchers/logo.png
+   - assets/launchers/logo_dark.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -49,7 +49,9 @@ class _PostEventScreenState extends State<PostEventScreen> {
     final isLight = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
+      backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
       appBar: AppBar(
+        backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
         title: const Text("Post Event"),
         centerTitle: true,
       ),

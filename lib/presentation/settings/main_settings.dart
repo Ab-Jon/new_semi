@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:semi_bill/presentation/settings/security.dart';
 import 'package:semi_bill/presentation/settings/update_profile.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+import '../../Auth/auth_api.dart';
+import '../../Auth/providers/user_provider.dart';
+
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
+
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+
 
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: isLight ? Colors.grey.shade100 : const Color(0xFF0F0F0F),
       body: SafeArea(
         child: Column(
           children: [
@@ -24,13 +35,12 @@ class SettingsScreen extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-
             const SizedBox(height: 20),
-            Divider(
-              height: 1,
-              thickness: 0.4,
-              color: Colors.grey.shade300,
-            ),
+            // Divider(
+            //   height: 1,
+            //   thickness: 0.4,
+            //   color: Colors.grey.shade300,
+            // ),
 
             /// Profile Card
             Padding(
@@ -38,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: isLight ? Colors.white : const Color(0xFF161616),
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
@@ -50,6 +60,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
+
                     /// Avatar
                     Stack(
                       children: [
@@ -112,15 +123,15 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 55),
+            const SizedBox(height: 20),
 
             /// Settings Card
             Expanded(
-              child: SingleChildScrollView(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   decoration: BoxDecoration(
-                    color:isLight? Colors.white: Colors.black54,
+                    color: isLight ? Colors.white : const Color(0xFF161616),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -133,6 +144,7 @@ class SettingsScreen extends StatelessWidget {
                   child: SafeArea(
                     bottom: false,
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         buildSettingItem(
                           context,
@@ -197,11 +209,14 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 110),
           ],
         ),
       ),
     );
   }
+}
+
 
   /// Single Setting Item
   Widget buildSettingItem(
@@ -276,4 +291,5 @@ class SettingsScreen extends StatelessWidget {
       ],
     );
   }
-}
+
+

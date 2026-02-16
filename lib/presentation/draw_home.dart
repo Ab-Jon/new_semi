@@ -30,7 +30,6 @@ class _DrawerContentState extends State<DrawerContent> {
     final double minDrawerWidth = 80.0;
     final double drawerWidth = _isCollapsed ? minDrawerWidth : maxDrawerWidth;
 
-
     return SizedBox(
       width: drawerWidth,
       child: Drawer(

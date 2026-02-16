@@ -1,3 +1,4 @@
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
@@ -17,13 +18,13 @@ class WalletDashboardScreen extends ConsumerWidget {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
-          ? Colors.black54 // DARK MODE
-          : Colors.white54,
+          ? const Color(0xFF0F0F0F) // DARK MODE
+          : Colors.grey.shade100,
       drawer: const DrawerContent(),
       appBar: AppBar(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? Colors.black54 // DARK MODE
-            : Colors.white54, // LIGHT MODE
+            ? const Color(0xFF0F0F0F) // DARK MODE
+            : Colors.grey.shade100, // LIGHT MODE
         elevation: 0,
         iconTheme: IconThemeData(
           color: Theme.of(context).brightness == Brightness.dark
@@ -32,6 +33,7 @@ class WalletDashboardScreen extends ConsumerWidget {
         ),
         actions: [
           IconButton(
+            color: Colors.white,
             onPressed: () {},
             icon: Icon(
               Ionicons.headset_outline,
@@ -60,9 +62,10 @@ class WalletDashboardScreen extends ConsumerWidget {
             children: [
               // Greeting
               Container(
-                height: 30.0,
+                padding: const EdgeInsets.all(10),
+                height: 70.0,
                 decoration: BoxDecoration(
-                  color: isLight? Colors.white : Colors.black54,
+                  color: isLight? Colors.white : const Color(0xFF161616),
                   borderRadius: BorderRadius.circular(14)
                 ),
                 child: Row(
@@ -72,12 +75,24 @@ class WalletDashboardScreen extends ConsumerWidget {
                       "Hi, Ubokobong",
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
-                    Row(
-                      children: const [
-                        Icon(Icons.flag_outlined, color: Colors.grey),
-                        SizedBox(width: 6),
-                        Text("EN", style: TextStyle(fontWeight: FontWeight.w500)),
-                      ],
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isLight ? Colors.grey.shade100 : const Color(0xFF1E1E1E),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          CountryFlag.fromCountryCode(
+                              'US',
+                          theme: const ImageTheme(
+                            shape: Circle(),
+                            width: 25,
+                          ),),
+                          const SizedBox(width: 4),
+                          const Text("EN", style: TextStyle(fontWeight: FontWeight.w500)),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -165,82 +180,99 @@ class WalletDashboardScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               // Services
               const Text(
                 "Services",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
+              const SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: isLight? Colors.white : const Color(0xFF161616),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    crossAxisCount: 4,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                    childAspectRatio:0.85,
+                    children: [
+                      _serviceItem(
+                        Ionicons.call_outline,
+                        "Airtime",
+                        context,
+                      ),
+                      _serviceItem(Ionicons.ticket_outline, "Ticket", context),
+                      _serviceItem(
+                        Ionicons.people_outline,
+                        "Crowd",
+                        context,
+                      ),
+                      _serviceItem(Ionicons.grid_outline, "More", context),
+                    ],
+                  ),
+                ),
               const SizedBox(height: 15),
-              GridView.count(
-                crossAxisCount: 4,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                children: [
-                  _serviceItem(
-                    Ionicons.call_outline,
-                    "Airtime",
-                    context,
-                  ),
-                  _serviceItem(Ionicons.ticket_outline, "Ticket", context),
-                  _serviceItem(
-                    Ionicons.people_outline,
-                    "Crowd Funding",
-                    context,
-                  ),
-                  _serviceItem(Ionicons.grid_outline, "More", context),
-                ],
-              ),
-              const SizedBox(height: 40),
               // Promo Banner
               PromoBannerSlider(),
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
               // Recent Transactions
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Recent Transaction",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    "See all →",
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                ],
+              Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: isLight? Colors.white : const Color(0xFF161616),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          "Recent Transaction",
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          "See all →",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    _transactionItem(
+                      avatar: "https://i.pravatar.cc/100?img=5",
+                      title: "Withdraw",
+                      subtitle: "Paid 30 mins ago",
+                      amount: "₦100.15",
+                      color: Colors.red,
+                      context: context,
+                    ),
+                    const SizedBox(height: 10),
+                    _transactionItem(
+                      avatar: "https://i.pravatar.cc/100?img=8",
+                      title: "Withdraw",
+                      subtitle: "Paid 30 mins ago",
+                      amount: "₦100.15",
+                      color: Colors.red,
+                      context: context,
+                    ),
+                  ],
+                )
               ),
               const SizedBox(height: 15),
-              _transactionItem(
-                avatar: "https://i.pravatar.cc/100?img=5",
-                title: "Withdraw",
-                subtitle: "Paid 30 mins ago",
-                amount: "₦100.15",
-                color: Colors.red,
-                context: context,
-              ),
-              const SizedBox(height: 10),
-              _transactionItem(
-                avatar: "https://i.pravatar.cc/100?img=8",
-                title: "Withdraw",
-                subtitle: "Paid 30 mins ago",
-                amount: "₦100.15",
-                color: Colors.red,
-                context: context,
-              ),
-              const SizedBox(height: 25),
-
               // Second Promo
               PromoBannerSlider(),
-              const SizedBox(height: 30),
-
+              const SizedBox(height: 15),
               // Report Section
               const Text(
                 "Report",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -253,7 +285,7 @@ class WalletDashboardScreen extends ConsumerWidget {
                   _reportButton(Icons.bar_chart_outlined, "Statistics", context),
                 ],
               ),
-              const SizedBox(height: 30), // reduced from 80 to 30
+              const SizedBox(height: 100), // reduced from 80 to 30
             ],
           ),
         ),
@@ -270,25 +302,34 @@ class WalletDashboardScreen extends ConsumerWidget {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: isLight ? Colors.white: Colors.black54,
-                borderRadius: BorderRadius.circular(12)),
+              color: isLight ? Colors.white: const Color(0xFF1E1E1E),
+                boxShadow: isLight
+                    ? [] // ❌ no shadow in light mode
+                    : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.5),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(25)),
             child: Icon(
               icon,
               color:  isLight
-                  ? const Color(0xFF2B124C)
-                  : const Color(0xFF632AAE),
-              size: 26,
+                  ? Colors.black
+                  : Colors.white,
+              size: 30,
             ),
           ),
           const SizedBox(height: 6),
-          Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15)),
         ],
       ),
     );
@@ -296,30 +337,31 @@ class WalletDashboardScreen extends ConsumerWidget {
 
   Widget _serviceItem(IconData icon, String title, BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: isLight ? Colors.white : Colors.black,
-                borderRadius: BorderRadius.circular(12)),
-            child: Icon(
-              icon,
-              size: 28,
-              color: isLight
-                  ? const Color(0xFF2B124C)
-                  : const Color(0xFF632AAE),
+            Container(
+              padding: const EdgeInsets.all(12),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: isLight ? Color(0xFF632AAE).withOpacity(0.08) : const Color(0xFF1E1E1E),
+                  borderRadius: BorderRadius.circular(25)),
+              child: Icon(
+                icon,
+                size: 28,
+                color: isLight
+                    ? const Color(0xFF2B124C)
+                    : const Color(0xFF632AAE),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 7),
         Text(
           title,
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
         ),
+
       ],
     );
   }
@@ -336,7 +378,9 @@ class WalletDashboardScreen extends ConsumerWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(
+        color: isLight? Colors.white: const Color(0xFF1A1A1A),
+          borderRadius: BorderRadius.circular(12)),
       child: Row(
         children: [
           CircleAvatar(backgroundImage: NetworkImage(avatar)),
@@ -384,38 +428,48 @@ class WalletDashboardScreen extends ConsumerWidget {
 
   Widget _reportButton(IconData icon, String label, BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-
     final Color iconColor = isLight
         ? const Color(0xFF2B124C)
         : const Color(0xFF632AAE);
-
     final Color textColor = isLight ? Colors.black : Colors.white;
-
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         margin: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
+          color: isLight? Colors.white : const Color(0xFF161616),
           borderRadius: BorderRadius.circular(12),
           // Optional: add background color here if needed
         ),
-        child: Row(
-          children: [
-            Icon(icon, color: iconColor),
-            const SizedBox(width: 5),
-            Expanded(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: textColor,
+        child: Container(
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12)
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: isLight? Color(0xFF632AAE).withOpacity(0.08) : const Color(0xFF1E1E1E),
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                  child: Icon(icon, color: iconColor)),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: textColor,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

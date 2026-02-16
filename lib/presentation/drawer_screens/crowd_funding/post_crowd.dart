@@ -11,18 +11,28 @@ class PostCrowdPage extends StatefulWidget {
 }
 
 class _PostCrowdPageState extends State<PostCrowdPage> {
-
   XFile? _selectedImage;
+
+  List<String> selectedCategories = ["Birthday"];
+  List<String> categories = [
+    "Charity","Community Project","Social Causes","Creative arts","Sustainability","Sports","Events",
+    "Health","Education"];
+  List<String> postOptions = ["Private Post", "Public Post"];
+  List<String> campOptions = ["Campaigner", "Beneficiary"];
+  List<String> promoteOptions = ["Free Promotions", "7 days ₦7000", "1 Month  ₦10,000", "Premium  ₦20,000" ];
+  String? postVisibility = "Private Post";
+  String? promoteVisibility = "Free promotions";
+  String? campaignVisibility = "Campaigner";
 
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
         title: Text(
           "Post Content",
           style: TextStyle(
@@ -223,19 +233,19 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
             const SizedBox(height: 10),
 
             Wrap(
-              spacing: 10,
-              runSpacing: 12,
-              children: [
-                categoryChip("Charity", true),
-                categoryChip("Community Project", false),
-                categoryChip("Social Causes", false),
-                categoryChip("Creative arts", false),
-                categoryChip("Sustainability", false),
-                categoryChip("Sports", false),
-                categoryChip("Events", false),
-                categoryChip("Health", false),
-                categoryChip("Education", false),
-              ],
+              spacing: 8,
+              runSpacing: 8,
+              children: categories.map((e) {
+                return FilterChip(
+                  label: Text(e),
+                  selected: selectedCategories.contains(e),
+                  onSelected: (v) {
+                    setState(() {
+                      v ? selectedCategories.add(e) : selectedCategories.remove(e);
+                    });
+                  },
+                );
+              }).toList(),
             ),
 
             const SizedBox(height: 25),
@@ -246,12 +256,15 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 10),
-            Row(
-              children: [
-                visibilityChip("Private Post", true),
-                const SizedBox(width: 12),
-                visibilityChip("Public Post", false),
-              ],
+            Wrap(
+              spacing: 10,
+              children: postOptions.map((e) {
+                return ChoiceChip(
+                  label: Text(e),
+                  selected: postVisibility == e,
+                  onSelected: (_) => setState(() => postVisibility = e),
+                );
+              }).toList(),
             ),
 
             const SizedBox(height: 25),
@@ -262,14 +275,16 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 10),
-            Row(
-              children: [
-                visibilityChip("Campaigner", true),
-                const SizedBox(width: 12),
-                visibilityChip("Beneficiary", false),
-              ],
+            Wrap(
+              spacing: 10,
+              children: campOptions.map((e) {
+                return ChoiceChip(
+                  label: Text(e),
+                  selected: campaignVisibility == e,
+                  onSelected: (_) => setState(() => campaignVisibility = e),
+                );
+              }).toList(),
             ),
-
             const SizedBox(height: 15),
 
             TextField(
@@ -298,13 +313,13 @@ class _PostCrowdPageState extends State<PostCrowdPage> {
 
             Wrap(
               spacing: 10,
-              runSpacing: 12,
-              children: [
-                promoChip("Free Promotion", true),
-                promoChip("7 days  ₦7000", false),
-                promoChip("1 Month  ₦10,000", false),
-                promoChip("Premium  ₦20,000", false),
-              ],
+              children: promoteOptions.map((e) {
+                return ChoiceChip(
+                  label: Text(e),
+                  selected: promoteVisibility == e,
+                  onSelected: (_) => setState(() => promoteVisibility = e),
+                );
+              }).toList(),
             ),
 
             const SizedBox(height: 40),

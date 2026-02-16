@@ -9,7 +9,7 @@ class FundraiserDetailsScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: isLight? Colors.white: const Color(0xFF0F0F0F),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -27,12 +27,15 @@ class FundraiserDetailsScreen extends StatelessWidget {
                 //     ],
                 //   ),
                 // ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network('https://images.pexels.com/photos/3184413/pexels-photo-3184413.jpeg',
-                    height: 120,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network('https://images.pexels.com/photos/3184413/pexels-photo-3184413.jpeg',
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -56,8 +59,12 @@ class FundraiserDetailsScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: isLight? Colors.white: const Color(0xFF1A1A1A),
                       borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.grey.shade100,
+                        width: 0.5
+                      ),
                       boxShadow: [
                         BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2)),
                       ],
@@ -66,17 +73,16 @@ class FundraiserDetailsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Spread the word on", style: TextStyle(fontSize: 14)),
-                        const SizedBox(height: 12),
-
                         Row(
                           children: [
+                            Text("Spread the word on", style: TextStyle(fontSize: 12)),
+                            const SizedBox(height: 8),
                             Image.asset("assets/icons/instagram.png", height: 26),
-                            SizedBox(width: 12),
+                            SizedBox(width: 8),
                             Image.asset("assets/icons/facebook.png", height: 26),
-                            SizedBox(width: 12),
+                            SizedBox(width: 8),
                             Image.asset("assets/icons/telegram.png", height: 26),
-                            SizedBox(width: 12),
+                            SizedBox(width: 8),
                             Image.asset("assets/icons/whatsapp.png", height: 26),
                           ],
                         ),
@@ -87,6 +93,13 @@ class FundraiserDetailsScreen extends StatelessWidget {
                             Text("700 raised", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                             Text("1500 Left", style: TextStyle(color: Colors.grey)),
                           ],
+                        ),
+                        const SizedBox(height: 8),
+                        LinearProgressIndicator(
+                          value: 0.47,
+                          backgroundColor: Colors.grey.shade300,
+                          color: isLight ? const Color(0xFF2B124C)
+                              : const Color(0xFF632AAE),
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -110,8 +123,8 @@ class FundraiserDetailsScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TabBar(
                     labelColor: isLight
-                        ? Colors.black12
-                        : Colors.white,
+                        ? const Color(0xFF2B124C)
+                        : const Color(0xFF632AAE),
                     unselectedLabelColor: Colors.grey,
                     labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     indicatorColor: isLight

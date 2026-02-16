@@ -25,8 +25,7 @@ class CrowdfundingPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
                 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg',
-                height: 120,
-                width: double.infinity,
+                height: 80,
                 fit: BoxFit.cover,
               ),
             ),
@@ -40,7 +39,7 @@ class CrowdfundingPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.search),
                       hintText: 'Search',
                       filled: true,
-                      fillColor: isLight? Colors.grey.shade300 : Colors.black12,
+                      fillColor: isLight? Colors.grey.shade100 : Colors.black12,
                       contentPadding: const EdgeInsets.symmetric(vertical: 0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -95,76 +94,82 @@ class CrowdfundingPage extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
     );
   }
 
   Widget _buildGrid(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 0.78,
-      ),
-      itemCount: 2,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.network(
-                  'https://images.pexels.com/photos/3184413/pexels-photo-3184413.jpeg',
-                  height: 95,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Brother\'s Gathering',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 4),
-                    const Text('18 days left', style: TextStyle(color: Colors.grey)),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        CircleAvatar(radius: 10, backgroundColor: isLight
-                            ? const Color(0xFF2B124C)
-                            : const Color(0xFF632AAE)),
-                        const SizedBox(width: 5),
-                        const Text('120 donors'),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => CampaignDetailsScreen()
-                            ));
-                          },
-                          child: const Text('Donate'),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+    return SizedBox(
+      height: 220,
+      child: GridView.builder(
+        scrollDirection: Axis.horizontal,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 0.78,
+        ),
+        itemCount: 4,
+        itemBuilder: (context, index) {
+          return Container(
+            decoration: BoxDecoration(
+              color: isLight? Colors.white : const Color(0xFF1A1A1A),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5
               )
-            ],
-          ),
-        );
-      },
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  child: Image.network(
+                    'https://images.pexels.com/photos/3184413/pexels-photo-3184413.jpeg',
+                    height: 80,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Brother\'s Gathering',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 4),
+                      const Text('18 days left', style: TextStyle(color: Colors.grey)),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          CircleAvatar(radius: 10, backgroundColor: isLight
+                              ? const Color(0xFF2B124C)
+                              : const Color(0xFF632AAE)),
+                          const SizedBox(width: 5),
+                          const Text('120 donors'),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => CampaignDetailsScreen()
+                              ));
+                            },
+                            child: const Text('Donate'),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -235,7 +240,7 @@ class CrowdfundingPage extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          color: selected ? Colors.white : Theme.of(context).colorScheme.surface,
+          color: selected ? Colors.white : isLight? Colors.black12: Colors.white,
           fontWeight: FontWeight.w500,
         ),
       ),

@@ -88,7 +88,7 @@ class CommentsTab extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: isLight? Colors.white: const Color(0xFF161616),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -158,7 +158,7 @@ class CommentsTab extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 14),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
+                            color: isLight ? Colors.white: const Color(0xFF161616),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Text(

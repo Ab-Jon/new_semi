@@ -45,6 +45,7 @@ class UpdatesTab extends StatelessWidget {
           itemCount: updates.length,
           itemBuilder: (context, index) {
             final item = updates[index];
+            final isLight = Theme.of(context).brightness == Brightness.light;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Column(
@@ -80,10 +81,10 @@ class UpdatesTab extends StatelessWidget {
 
                   Text(
                     item["text"]!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       height: 1.4,
-                      color: Colors.black87,
+                      color: isLight? Colors.black87: Colors.white,
                     ),
                   ),
                 ],

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:semi_bill/themes/app_theme.dart';
 import 'package:semi_bill/themes/theme_provider.dart';
-import 'home_screen.dart';
+
+import 'Auth/sign_in/sign_in.dart';
+
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -14,7 +16,7 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeProvider);
+
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -40,7 +42,7 @@ class MyApp extends ConsumerWidget {
         ],
       ),
       themeMode: ThemeMode.system,
-      home: const HomeScreen(),
+      home: SignInScreen(),
     );
   }
 }

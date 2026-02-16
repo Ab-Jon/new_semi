@@ -61,7 +61,7 @@ class _PhotoPickerPreviewState extends State<PhotoPickerPreview> {
         width: double.infinity,
         height: 180,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: isLight? Colors.white: const Color(0xFF0F0F0F),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: isLight
               ? const Color(0xFF2B124C)
