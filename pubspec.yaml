@@ -42,7 +42,7 @@ dependencies:
   qr_flutter: ^4.1.0
   image_picker: ^1.2.1
   share_plus: ^12.0.1
-  font_awesome_flutter: ^10.7.0
+  font_awesome_flutter: ^11.0.0
   country_flags: ^4.1.1
   dio: ^5.9.0
   flutter_secure_storage: ^10.0.0

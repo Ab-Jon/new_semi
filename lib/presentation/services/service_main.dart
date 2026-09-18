@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:semi_bill/ui/ionicons.dart';
 import 'package:semi_bill/presentation/services/airtime/airtime_home.dart';
 import 'package:semi_bill/presentation/services/betting/betting_screen.dart';
 import 'package:semi_bill/presentation/services/cable/cable_tv.dart';

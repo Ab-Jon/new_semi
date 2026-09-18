@@ -2,7 +2,7 @@ import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:semi_bill/ui/ionicons.dart';
 import 'package:semi_bill/presentation/draw_home.dart';
 import 'package:semi_bill/presentation/promo_banner.dart';
 import 'package:semi_bill/presentation/services/airtime/airtime_home.dart';

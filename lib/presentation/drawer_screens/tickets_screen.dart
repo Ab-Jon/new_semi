@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:semi_bill/ui/ionicons.dart';
 import 'package:semi_bill/presentation/drawer_screens/tickets/events/event_screen.dart';
 import 'package:semi_bill/presentation/drawer_screens/tickets/purchase_tickets.dart';
 

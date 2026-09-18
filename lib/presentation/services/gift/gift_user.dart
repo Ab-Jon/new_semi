@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:semi_bill/ui/ionicons.dart';
 
 class GiftUserPage extends StatefulWidget {
   const GiftUserPage({super.key});

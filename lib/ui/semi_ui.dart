@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:semi_bill/ui/ionicons.dart';
 import 'package:semi_bill/themes/app_theme.dart';
 
 class SemiButton extends StatelessWidget {
