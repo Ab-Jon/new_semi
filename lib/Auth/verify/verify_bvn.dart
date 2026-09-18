@@ -1,25 +1,23 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:semi_bill/Auth/verify/verify_otp.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 import '../../bvn/bvn_provider.dart';
 import '../../bvn/bvn_verification.dart';
-import 'package:flutter/material.dart';
 
 class BvnInputScreen extends ConsumerWidget {
-  final _controller = TextEditingController();
-
   BvnInputScreen({super.key});
+
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<BvnVerificationState>(bvnProvider, (previous, next) {
-      // Navigate ONLY when otpId changes from null → value
       if (previous?.otpId == null && next.otpId != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const VerifyCodeScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => const VerifyCodeScreen()),
           );
         });
       }
@@ -37,28 +35,30 @@ class BvnInputScreen extends ConsumerWidget {
     final state = ref.watch(bvnProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("BVN Verification")),
+      appBar: AppBar(title: const Text('BVN Verification')),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(24),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
+            const SemiAuthHeader(
+              lead: 'Verify ',
+              accent: 'BVN',
+              subtitle: 'We use your BVN to protect withdrawals and raise limits.',
+            ),
+            const SizedBox(height: 28),
+            SemiField(
               controller: _controller,
+              label: 'Enter BVN',
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Enter BVN"),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: state.loading
-                  ? null
-                  : () {
-                ref
-                    .read(bvnProvider.notifier)
-                    .submitBvn(_controller.text.trim());
+            SemiButton(
+              label: 'Continue',
+              loading: state.loading,
+              onPressed: () {
+                ref.read(bvnProvider.notifier).submitBvn(_controller.text.trim());
               },
-              child: state.loading
-                  ? const CircularProgressIndicator()
-                  : const Text("Continue"),
             ),
           ],
         ),

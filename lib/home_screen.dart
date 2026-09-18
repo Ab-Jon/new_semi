@@ -4,6 +4,7 @@ import 'package:semi_bill/presentation/services/service_main.dart';
 import 'package:semi_bill/presentation/settings/main_settings.dart';
 import 'package:semi_bill/presentation/wallet/wallet_screen.dart';
 import 'package:semi_bill/presentation/wallet_dashboard.dart';
+import 'package:semi_bill/themes/app_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,97 +23,79 @@ class _HomeScreenState extends State<HomeScreen> {
     const SettingScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final icons = [
+    const icons = [
       Ionicons.home,
       Ionicons.briefcase,
       Ionicons.wallet,
       Ionicons.settings,
     ];
-
-    final labels = ["Home", "Services", "Wallet", "Settings"];
+    const labels = ['Home', 'Services', 'Wallet', 'Settings'];
 
     return Scaffold(
-      extendBody: true, // IMPORTANT: allows floating effect
+      backgroundColor: context.pageBg,
+      extendBody: true,
       body: Stack(
         children: [
-          // MAIN CONTENT
           _screens[_selectedIndex],
-          // FLOATING / SUSPENDED NAV BAR
           Positioned(
             left: 16,
             right: 16,
-            bottom: 20,
+            bottom: 18,
             child: Container(
-              height: 80,
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              height: 72,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? const Color(0xFF1E1E1E)
-                    : const Color(0xFF2B124C),
-                borderRadius: BorderRadius.circular(30),
+                color: context.isDark ? SemiColors.cardDark : SemiColors.brand,
+                borderRadius: BorderRadius.circular(28),
                 boxShadow: [
-                 // BoxShadow(
-                  //   color: Colors.black.withOpacity(0.15),
-                  //   blurRadius: 20,
-                  //   offset: const Offset(0, 10),
-                  // ),
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.18),
+                    blurRadius: 24,
+                    offset: const Offset(0, 10),
+                  ),
                 ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(icons.length, (index) {
-                  final bool isSelected = _selectedIndex == index;
-                  final bool isDark =
-                      Theme.of(context).brightness == Brightness.dark;
-
-                  final Color selectedBackground =
-                  isDark ? const Color(0xFF5B37B7) : const Color(0xFFDFD7F3);
-
-                  final Color selectedTextColor =
-                  isDark ? const Color(0xFFB6A4FF) : const Color(0xFF5B37B7);
-
-                  const Color unselectedColor = Colors.white70;
-
+                  final selected = _selectedIndex == index;
+                  final selectedBg = context.isDark
+                      ? const Color(0xFF5B37B7)
+                      : SemiColors.lavender;
+                  final selectedFg = context.isDark
+                      ? SemiColors.lavender
+                      : SemiColors.brand;
                   return GestureDetector(
-                    onTap: () => _onItemTapped(index),
+                    onTap: () => setState(() => _selectedIndex = index),
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 220),
                       padding: EdgeInsets.symmetric(
-                        horizontal: isSelected ? 16 : 14,
+                        horizontal: selected ? 14 : 12,
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color:
-                        isSelected ? selectedBackground : Colors.transparent,
-                        borderRadius: BorderRadius.circular(24),
+                        color: selected ? selectedBg : Colors.transparent,
+                        borderRadius: BorderRadius.circular(22),
                       ),
                       child: Row(
                         children: [
                           Icon(
                             icons[index],
-                            size: 24,
-                            color:
-                            isSelected ? selectedTextColor : unselectedColor,
+                            size: 22,
+                            color: selected ? selectedFg : Colors.white70,
                           ),
-                          if (isSelected)
-                            Padding(
-                              padding: const EdgeInsets.only(left: 6),
-                              child: Text(
-                                labels[index],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: selectedTextColor,
-                                ),
+                          if (selected) ...[
+                            const SizedBox(width: 6),
+                            Text(
+                              labels[index],
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: selectedFg,
                               ),
                             ),
+                          ],
                         ],
                       ),
                     ),
@@ -125,72 +108,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-class _AnimatedBottomNavBar extends StatefulWidget {
-  const _AnimatedBottomNavBar({super.key});
-
-  @override
-  State<_AnimatedBottomNavBar> createState() => _AnimatedBottomNavBarState();
-}
-
-class _AnimatedBottomNavBarState extends State<_AnimatedBottomNavBar> {
-  int _selectedIndex = 0;
-
-  final List<_NavItem> _items = [
-    _NavItem(Ionicons.home, "Home"),
-    _NavItem(Ionicons.briefcase, "Services"),
-    _NavItem(Ionicons.wallet, "Wallet"),
-    _NavItem(Ionicons.settings, "Settings"),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(_items.length, (index) {
-        final isSelected = index == _selectedIndex;
-        final item = _items[index];
-
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeOut,
-            padding: EdgeInsets.symmetric(
-              horizontal: isSelected ? 16 : 0,
-              vertical: 10,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: [
-                Icon(item.icon, size: 26),
-                if (isSelected) ...[
-                  const SizedBox(width: 8),
-                  Text(
-                    item.label,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        );
-      }),
-    );
-  }
-}
-
-class _NavItem {
-  final IconData icon;
-  final String label;
-  const _NavItem(this.icon, this.label);
 }

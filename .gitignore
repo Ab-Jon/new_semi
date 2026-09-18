@@ -1,3 +1,7 @@
+# Agent design captures
+figma_screenshots/
+.cursor/
+
 # Miscellaneous
 *.class
 *.log

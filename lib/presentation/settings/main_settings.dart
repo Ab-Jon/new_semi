@@ -1,73 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:semi_bill/presentation/settings/account_verification.dart';
+import 'package:semi_bill/presentation/settings/device_session.dart';
+import 'package:semi_bill/presentation/settings/faq.dart';
+import 'package:semi_bill/presentation/settings/notifications.dart';
 import 'package:semi_bill/presentation/settings/security.dart';
+import 'package:semi_bill/presentation/settings/support.dart';
+import 'package:semi_bill/presentation/settings/terms_conditions.dart';
 import 'package:semi_bill/presentation/settings/update_profile.dart';
+import 'package:semi_bill/themes/app_theme.dart';
+import 'package:semi_bill/themes/theme_provider.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../Auth/auth_api.dart';
-import '../../Auth/providers/user_provider.dart';
-
-class SettingScreen extends StatefulWidget {
+class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mode = ref.watch(themeProvider);
     return Scaffold(
-      backgroundColor: isLight ? Colors.grey.shade100 : const Color(0xFF0F0F0F),
+      backgroundColor: context.pageBg,
       body: SafeArea(
         child: Column(
           children: [
             const SizedBox(height: 16),
-
-            /// Title
             const Text(
-              "Settings",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+              'Settings',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 20),
-            // Divider(
-            //   height: 1,
-            //   thickness: 0.4,
-            //   color: Colors.grey.shade300,
-            // ),
-
-            /// Profile Card
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: isLight ? Colors.white : const Color(0xFF161616),
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
+              child: SemiCard(
                 child: Row(
                   children: [
-
-                    /// Avatar
                     Stack(
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: Image.network(
-                            "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91",
+                          child: Image.asset(
+                            'assets/avatar_1.jpg',
                             height: 56,
                             width: 56,
                             fit: BoxFit.cover,
@@ -80,131 +52,103 @@ class _SettingScreenState extends State<SettingScreen> {
                             height: 18,
                             width: 18,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF632AAE),
+                              color: context.brand,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.person,
-                              size: 12,
-                              color: Colors.white,
-                            ),
+                            child: const Icon(Icons.person, size: 12, color: Colors.white),
                           ),
                         ),
                       ],
                     ),
-
                     const SizedBox(width: 14),
-
-                    /// Name & Email
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Boss Unwana",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Boss Unwana',
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "ubokobong@gmail.com",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: isLight
-                                ? Colors.black54
-                                : Colors.white54,
+                          SizedBox(height: 4),
+                          Text(
+                            'ubokobong@gmail.com',
+                            style: TextStyle(fontSize: 13),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-
-            const SizedBox(height: 20),
-
-            /// Settings Card
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SemiCard(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: SwitchListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                  title: const Text('Dark mode', style: TextStyle(fontWeight: FontWeight.w600)),
+                  value: mode == ThemeMode.dark ||
+                      (mode == ThemeMode.system &&
+                          MediaQuery.platformBrightnessOf(context) == Brightness.dark),
+                  onChanged: (value) {
+                    ref.read(themeProvider.notifier).state =
+                        value ? ThemeMode.dark : ThemeMode.light;
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isLight ? Colors.white : const Color(0xFF161616),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 14,
-                        offset: const Offset(0, 6),
+                child: SemiCard(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: ListView(
+                    children: [
+                      SemiListTile(
+                        icon: Icons.shield_outlined,
+                        title: 'Security',
+                        onTap: () => _open(context, const SecurityScreen()),
+                      ),
+                      SemiListTile(
+                        icon: Icons.notifications_outlined,
+                        title: 'Notifications',
+                        onTap: () => _open(context, const NotificationSettingsPage()),
+                      ),
+                      SemiListTile(
+                        icon: Icons.verified_outlined,
+                        title: 'Account Verification',
+                        onTap: () => _open(context, const AccountVerificationPage()),
+                      ),
+                      SemiListTile(
+                        icon: Icons.person_outline,
+                        title: 'Update Profile',
+                        onTap: () => _open(context, const UpdateProfileScreen()),
+                      ),
+                      SemiListTile(
+                        icon: Icons.support_agent_outlined,
+                        title: 'Support',
+                        onTap: () => _open(context, const SupportScreen()),
+                      ),
+                      SemiListTile(
+                        icon: Icons.devices_other_outlined,
+                        title: 'Device & Session',
+                        onTap: () => _open(context, const DeviceSessionPage()),
+                      ),
+                      SemiListTile(
+                        icon: Icons.help_outline,
+                        title: 'FAQ',
+                        onTap: () => _open(context, const FaqPage()),
+                      ),
+                      SemiListTile(
+                        icon: Icons.description_outlined,
+                        title: 'Terms & Condition',
+                        showDivider: false,
+                        onTap: () => _open(context, const TermsConditionsPage()),
                       ),
                     ],
-                  ),
-                  child: SafeArea(
-                    bottom: false,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        buildSettingItem(
-                          context,
-                          Icons.shield_outlined,
-                          "Security",
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => SecurityScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                        buildSettingItem(
-                          context,
-                          Icons.notifications_outlined,
-                          "Notifications",
-                        ),
-                        buildSettingItem(
-                          context,
-                          Icons.verified_outlined,
-                          "Account Verification",
-                        ),
-                        buildSettingItem(
-                          context,
-                          Icons.person_outline,
-                          "Update Profile",
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => UpdateProfileScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                        buildSettingItem(
-                          context,
-                          Icons.support_agent_outlined,
-                          "Support",
-                        ),
-                        buildSettingItem(
-                          context,
-                          Icons.devices_other_outlined,
-                          "Device & Session",
-                        ),
-                        buildSettingItem(
-                          context,
-                          Icons.help_outline,
-                          "FAQ",
-                        ),
-                        buildSettingItem(
-                          context,
-                          Icons.description_outlined,
-                          "Terms & Condition",
-                          showDivider: false,
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),
@@ -215,81 +159,8 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
     );
   }
-}
 
-
-  /// Single Setting Item
-  Widget buildSettingItem(
-      BuildContext context,
-      IconData icon,
-      String title, {
-        VoidCallback? onTap,
-        bool showDivider = true,
-      }) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-
-    return Column(
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-            child: Row(
-              children: [
-                /// Icon Container
-                Container(
-                  height: 36,
-                  width: 36,
-                  decoration: BoxDecoration(
-                    color: isLight? Color(0xFF2B124C).withOpacity(0.12): Colors.black54,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    icon,
-                    size: 18,
-                    color: isLight? Color(0xFF2B124C): Color(0xFF632AAE),
-                  ),
-                ),
-
-                const SizedBox(width: 14),
-
-                /// Title
-                Expanded(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-
-                /// Chevron
-                Icon(
-                  Icons.chevron_right,
-                  size: 22,
-                  color: isLight
-                      ? Colors.black38
-                      : Colors.white38,
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (showDivider)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(
-              height: 1,
-              thickness: 0.2,
-              color: Colors.black54,
-            ),
-          ),
-      ],
-    );
+  void _open(BuildContext context, Widget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => page));
   }
-
-
+}

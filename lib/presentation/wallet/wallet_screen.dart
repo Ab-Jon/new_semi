@@ -165,18 +165,9 @@ class _WalletScreenState extends State<WalletScreen> {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            'Wallet',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: isLight ? const Color(0xFF0F0F0F) : Colors.white,
-            ),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: isLight ? Colors.grey.shade100 : const Color(0xFF0F0F0F) // DARK MODE,
+        title: const Text('Wallet'),
       ),
-      backgroundColor: isLight ? Colors.white : const Color(0xFF0F0F0F),
+      backgroundColor: isLight ? const Color(0xFFF5F4F8) : const Color(0xFF0F0F0F),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         child: Column(
