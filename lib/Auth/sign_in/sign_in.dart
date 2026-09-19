@@ -9,6 +9,9 @@ import 'package:semi_bill/ui/semi_ui.dart';
 import '../providers/auth_provider.dart';
 import '../providers/auth_token_provider.dart';
 
+/// Set to false when the login API is ready.
+const bool kBypassAuth = true;
+
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
 
@@ -29,7 +32,19 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     super.dispose();
   }
 
+  void _enterApp() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const HomeScreen()),
+    );
+  }
+
   Future<void> loginUser(BuildContext context) async {
+    if (kBypassAuth) {
+      _enterApp();
+      return;
+    }
+
     if (isLoading) return;
     setState(() => isLoading = true);
 
@@ -136,16 +151,6 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     MaterialPageRoute(builder: (context) => const RegisterScreen()),
                   );
                 },
-              ),
-              const SizedBox(height: 28),
-              OutlinedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                  );
-                },
-                child: const Text('Explore the app'),
               ),
             ],
           ),
