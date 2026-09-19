@@ -36,6 +36,10 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+*.apk
+
+# Android local SDK path
+/android/local.properties
 
 # Symbolication related
 app.*.symbols
