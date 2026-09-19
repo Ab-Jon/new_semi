@@ -1,38 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../themes/app_theme.dart';
+import 'package:semi_bill/themes/app_theme.dart';
 
 class WalletDepositSheet {
   static void show(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       builder: (context) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+            color: context.cardColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               // top icon
-              CircleAvatar(
-                radius: 28,
-                backgroundColor: isLight
-                    ? const Color(0xFFF3EDFF)
-                    : const Color(0xFF2A1A44),
-                child: Icon(
-                  Icons.savings_outlined,
-                  color: isLight ? const Color(0xFF2B124C) : const Color(0xFF632AAE),
-                  size: 26,
-                ),
+              Container(
+                height: 56,
+                width: 56,
+                decoration: BoxDecoration(color: context.iconWash, shape: BoxShape.circle),
+                child: Icon(Icons.savings_outlined, color: context.brand, size: 26),
               ),
 
               const SizedBox(height: 15),
@@ -61,9 +54,7 @@ class WalletDepositSheet {
                   ),
                   const SizedBox(width: 10),
                   IconButton(
-                    icon: Icon(Icons.copy, size: 22, color: isLight
-                        ? const Color(0xFF2B124C)
-                        : const Color(0xFF632AAE)),
+                    icon: Icon(Icons.copy, size: 22, color: context.brand),
                     onPressed: () {
                       Clipboard.setData(const ClipboardData(text: "804356788"));
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -102,9 +93,7 @@ class WalletDepositSheet {
                             Icon(
                               Icons.account_balance,
                               size: 18,
-                              color: isLight
-                                  ? const Color(0xFF2B124C)
-                                  : const Color(0xFF632AAE),
+                              color: context.brand,
                             ),
                             const SizedBox(width: 5),
                             Text(
@@ -163,11 +152,9 @@ class WalletDepositSheet {
                 height: 48,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isLight
-                        ? const Color(0xFF2B124C)
-                        : const Color(0xFF632AAE),
+                    backgroundColor: context.brand,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                   onPressed: () {

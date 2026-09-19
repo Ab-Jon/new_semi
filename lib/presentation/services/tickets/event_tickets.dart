@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:semi_bill/presentation/services/tickets/purchase_tickets.dart';
+import 'package:semi_bill/themes/app_theme.dart';
+import 'package:semi_bill/ui/ionicons.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
@@ -10,40 +13,34 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
-  final List<Map<String, String>> events = List.generate(8, (index) => {
-    "title": "Brother's Gathering",
-    "image": "https://picsum.photos/seed/event$index/800/600",
-    "date": "Dec 31",
-    "price": "₦8000.00",
-    "location": "Lovers inn, Lekki Lagos",
-  });
+  final events = List.generate(
+    8,
+    (index) => {
+      'title': "Brother's Gathering",
+      'image': 'assets/event.jpg',
+      'date': 'Dec 31',
+      'price': '₦8,000.00',
+      'location': 'Lovers inn, Lekki Lagos',
+    },
+  );
 
-  // Featured carousel controller
   late final PageController _pageController;
   Timer? _autoScrollTimer;
   int _currentPage = 0;
-
-  // Filter state
   String selectedCategory = 'Concert';
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(viewportFraction: 0.92);
-    _startAutoScroll();
-  }
-
-  void _startAutoScroll() {
-    _autoScrollTimer?.cancel();
-    _autoScrollTimer = Timer.periodic(const Duration(seconds: 3), (_) {
-      if (_pageController.positions.isNotEmpty) {
-        _currentPage = (_currentPage + 1) % 3; // cycle first 3 featured
-        _pageController.animateToPage(
-          _currentPage,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
-      }
+    _autoScrollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
+      if (_pageController.positions.isEmpty) return;
+      _currentPage = (_currentPage + 1) % 3;
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 420),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
@@ -54,393 +51,257 @@ class _EventsScreenState extends State<EventsScreen> {
     super.dispose();
   }
 
-  void _openFilterDialog() {
-    showDialog(
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: context.pageBg,
+      appBar: AppBar(
+        backgroundColor: context.pageBg,
+        leading: const SemiBackButton(),
+        title: const Text('Event'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.only(bottom: 28),
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Ionicons.search_outline, color: context.brand),
+                      hintText: 'Search',
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                GestureDetector(
+                  onTap: _openFilter,
+                  child: Container(
+                    height: 52,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: context.isDark ? SemiColors.surfaceDark : const Color(0xFFF6F4FA),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Row(
+                      children: [
+                        Text('Filter by: ', style: TextStyle(color: context.semi.muted, fontSize: 13)),
+                        Text(selectedCategory, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+                        Icon(Ionicons.chevron_down, size: 16, color: context.brand),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 210,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: 3,
+              onPageChanged: (i) => setState(() => _currentPage = i),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: _EventPoster(item: events[index], featured: true),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          _section('Premium'),
+          _rail(),
+          _section('Recently added', trailing: 'View more'),
+          _rail(),
+          _section('Event of the Month', trailing: 'View more'),
+          _rail(),
+          _section('Event near you', trailing: 'View more'),
+          _rail(),
+        ],
+      ),
+    );
+  }
+
+  Widget _section(String title, {String? trailing}) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 10),
+      child: Row(
+        children: [
+          Expanded(child: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700))),
+          if (trailing != null)
+            Text(trailing, style: TextStyle(color: context.brand, fontWeight: FontWeight.w600, fontSize: 13)),
+        ],
+      ),
+    );
+  }
+
+  Widget _rail() {
+    return SizedBox(
+      height: 188,
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        scrollDirection: Axis.horizontal,
+        itemCount: 4,
+        separatorBuilder: (_, __) => const SizedBox(width: 12),
+        itemBuilder: (context, index) => _EventPoster(item: events[index % events.length]),
+      ),
+    );
+  }
+
+  void _openFilter() {
+    showModalBottomSheet(
       context: context,
+      backgroundColor: context.cardColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
       builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 80),
-          child: FilterCard(
-            selected: selectedCategory,
-            onSelect: (cat) {
-              setState(() => selectedCategory = cat);
-              Navigator.of(context).pop();
-            },
+        const categories = [
+          'Concert', 'Sports', 'Theatre', 'Festival', 'Education',
+          'Performance', 'Travel', 'Seminar', 'Conference', 'Music',
+        ];
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Expanded(child: Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700))),
+                  IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)),
+                ],
+              ),
+              const SizedBox(height: 8),
+              const Text('Categories', style: TextStyle(fontWeight: FontWeight.w600)),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: categories.map((c) {
+                  final selected = c == selectedCategory;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() => selectedCategory = c);
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: selected ? context.brand : context.iconWash,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        c,
+                        style: TextStyle(
+                          color: selected ? Colors.white : context.brand,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
           ),
         );
       },
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('Event'),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 44,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Theme.of(context).colorScheme.surface),
-                        ),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.search, color: Colors.grey),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Search',
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    GestureDetector(
-                      onTap: _openFilterDialog,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Theme.of(context).colorScheme.surface),
-                        ),
-                        child: Row(
-                          children: [
-                            const Text('Filter by: '),
-                            Text(
-                              selectedCategory,
-                              style: const TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(width: 6),
-                            const Icon(Icons.keyboard_arrow_down),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Featured carousel
-              SizedBox(
-                height: 220,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: 3,
-                  onPageChanged: (i) => setState(() => _currentPage = i),
-                  itemBuilder: (context, index) {
-                    final item = events[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: FeaturedCard(item: item),
-                    );
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 18),
-
-              // Sections
-              _sectionHeader('Premium'),
-              SizedBox(height: 8),
-              _horizontalList(),
-
-              const SizedBox(height: 18),
-              _sectionHeader('Recently added', trailing: 'View more'),
-              SizedBox(height: 8),
-              _horizontalList(),
-
-              const SizedBox(height: 18),
-              _sectionHeader('Event of the Month', trailing: 'View more'),
-              SizedBox(height: 8),
-              _horizontalList(),
-
-              const SizedBox(height: 18),
-              _sectionHeader('Event near you', trailing: 'View more'),
-              SizedBox(height: 8),
-              _horizontalList(),
-
-              const SizedBox(height: 24),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _sectionHeader(String title, {String? trailing}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          ),
-          if (trailing != null)
-            Text(trailing),
-        ],
-      ),
-    );
-  }
-
-  Widget _horizontalList() {
-    return SizedBox(
-      height: 160,
-      child: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => EventCard(item: events[index % events.length]),
-        separatorBuilder: (_, __) => const SizedBox(width: 12),
-        itemCount: 4,
-      ),
-    );
-  }
 }
 
-class FeaturedCard extends StatelessWidget {
+class _EventPoster extends StatelessWidget {
+  const _EventPoster({required this.item, this.featured = false});
+
   final Map<String, String> item;
-  const FeaturedCard({required this.item, super.key});
+  final bool featured;
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-    return Material(
-      borderRadius: BorderRadius.circular(12),
-      elevation: 2,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => const PurchaseTicketPage()));
+      },
       child: Container(
+        width: featured ? null : 188,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Theme.of(context).colorScheme.surface,
+          color: context.cardColor,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: context.isDark
+              ? []
+              : [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 14,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
         ),
+        clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                    child: Image.network(
-                      item['image']!,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+            Stack(
+              children: [
+                Image.asset(
+                  item['image']!,
+                  height: featured ? 128 : 96,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Container(
+                    height: featured ? 128 : 96,
+                    color: context.iconWash,
+                  ),
+                ),
+                Positioned(
+                  left: 10,
+                  top: 10,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      item['date']!,
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  Positioned(
-                    left: 12,
-                    top: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(item['date']!, style: const TextStyle(fontWeight: FontWeight.w700)),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 6),
+                  Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+                  if (!featured) ...[
+                    const SizedBox(height: 2),
+                    Text(item['price']!, style: TextStyle(color: context.brand, fontWeight: FontWeight.w600, fontSize: 12)),
+                  ],
+                  const SizedBox(height: 4),
                   Row(
                     children: [
-                      Icon(Icons.location_on_outlined, size: 14, color: isLight
-                          ? const Color(0xFF2B124C)
-                          : const Color(0xFF632AAE)),
-                      const SizedBox(width: 6),
-                      Expanded(child: Text(item['location']!, style: const TextStyle( fontSize: 12))),
+                      Icon(Ionicons.location_outline, size: 13, color: context.brand),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          item['location']!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 11, color: context.semi.muted),
+                        ),
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class EventCard extends StatelessWidget {
-  final Map<String, String> item;
-  const EventCard({required this.item, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(context,
-        MaterialPageRoute(builder: (context) => PurchaseTicketPage()));
-      },
-      child: Container(
-        width: 200,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Theme.of(context).colorScheme.surface),
-        ),
-        child: Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                      child: Image.network(
-                        item['image']!,
-                        height: 90,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Positioned(
-                      left: 8,
-                      top: 8,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(item['date']!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.w700)),
-                      const SizedBox(height: 6),
-                      Text(item['price']!),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Icon(Icons.location_on_outlined, size: 14, color: isLight
-                              ? const Color(0xFF2B124C)
-                              : const Color(0xFF632AAE),),
-                          const SizedBox(width: 6),
-                          Expanded(child: Text(item['location']!, style: const TextStyle(fontSize: 12))),
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FilterCard extends StatelessWidget {
-  final String selected;
-  final ValueChanged<String> onSelect;
-  const FilterCard({required this.selected, required this.onSelect, super.key});
-
-  static const List<String> categories = [
-    'Concert',
-    'Sports',
-    'Theatre',
-    'Festival',
-    'Education',
-    'Performance',
-    'Travel',
-    'Seminar',
-    'Conference',
-    'Music',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            ],
-          ),
-          const SizedBox(height: 8),
-          const Text('Categories'),
-          const SizedBox(height: 12),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: categories.map((c) {
-              final bool isSelected = c == selected;
-              return GestureDetector(
-                onTap: () => onSelect(c),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: isSelected ? isLight
-                        ? const Color(0xFF2B124C)
-                        : const Color(0xFF632AAE) : Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Theme.of(context).colorScheme.surface),
-                  ),
-                  child: Text(
-                    c,
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : isLight ? Colors.black : Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 12),
-        ],
       ),
     );
   }

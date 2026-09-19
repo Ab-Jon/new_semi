@@ -1,237 +1,161 @@
 import 'package:flutter/material.dart';
+import 'package:semi_bill/themes/app_theme.dart';
+import 'package:semi_bill/ui/ionicons.dart';
 import 'package:semi_bill/ui/semi_ui.dart';
 import 'confirm_withdrawal.dart';
 
 class WithdrawalScreen extends StatelessWidget {
   const WithdrawalScreen({super.key});
 
-  // NOTE: Using the local file paths you uploaded as "network" image URLs per your request.
-  // Your toolchain will transform them into real URLs if needed.
-  final String sampleAvatar1 = 'file:///mnt/data/work29.PNG';
-  final String sampleAvatar2 = 'file:///mnt/data/work30.PNG';
-  final String sampleAvatar3 = 'file:///mnt/data/work31.PNG';
-
-
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: context.pageBg,
       appBar: AppBar(
         leading: const SemiBackButton(),
         title: const Text('Withdrawal'),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.history, color: isLight
-              ? const Color(0xFF2B124C)
-              : const Color(0xFF632AAE),)),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Ionicons.time_outline, color: context.brand),
+          ),
         ],
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: context.pageBg,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        child: Column(
-          children: [
-            // Balance block
-            Column(
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
+        children: [
+          Text('Available', style: TextStyle(fontSize: 13, color: context.semi.muted), textAlign: TextAlign.center),
+          const SizedBox(height: 4),
+          Text('₦450,000.00', style: TextStyle(fontSize: 13, color: context.semi.muted), textAlign: TextAlign.center),
+          const SizedBox(height: 10),
+          const Text(
+            '₦2,000',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800, letterSpacing: -0.4),
+          ),
+          const SizedBox(height: 18),
+          SemiCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Available', style: TextStyle( fontSize: 12)),
+                const Text('Recipient Account', style: TextStyle(fontWeight: FontWeight.w700)),
+                const SizedBox(height: 12),
+                const TextField(
+                  decoration: InputDecoration(hintText: 'Enter 10 digits Account Number'),
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                  decoration: BoxDecoration(
+                    color: context.isDark ? SemiColors.surfaceDark : const Color(0xFFF6F4FA),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset('assets/zenith.png', height: 22, errorBuilder: (_, __, ___) => Icon(Ionicons.card_outline, color: context.brand, size: 20)),
+                      const SizedBox(width: 10),
+                      const Expanded(child: Text('Zenith Bank', style: TextStyle(fontWeight: FontWeight.w600))),
+                      Icon(Icons.chevron_right, color: context.iconTint),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  decoration: BoxDecoration(
+                    color: context.brand,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.check_circle, color: Colors.white, size: 20),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Chikwado Ugochukwu Augustine',
+                          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 14),
+                const Text('Remark', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 6),
-                Text('N450,000.00', style: TextStyle(fontSize: 12,)),
+                const TextField(
+                  decoration: InputDecoration(hintText: 'Enter Description (What is this for)'),
+                  minLines: 1,
+                  maxLines: 3,
+                ),
                 const SizedBox(height: 16),
-                Text('N2,000', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold,)),
-                const SizedBox(height: 18),
+                SemiButton(
+                  label: 'Proceed Withdrawal',
+                  onPressed: () {
+                    WithdrawalFlow.showSummary(context, amount: 5000);
+                  },
+                ),
               ],
             ),
-
-            // Recipient account card
-            Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Recipient Account', style: TextStyle(fontWeight: FontWeight.w600)),
-                    const SizedBox(height: 10),
-                    TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Enter 10 digits Account Number',
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(height: 12),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(child: Text('Zenith Bank')),
-                            Icon(Icons.arrow_forward_ios, size: 18, color: isLight
-                                ? const Color(0xFF2B124C)
-                                : const Color(0xFF632AAE),),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Account owner confirm chip
-                    Container(
-                      decoration: BoxDecoration(
-                        color: isLight
-                            ? const Color(0xFF2B124C)
-                            : const Color(0xFF632AAE),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.check, color: Colors.white, size: 18),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(child: Text('Chikwado Ugochukwu Augustine', style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                          color: Colors.white))),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 14),
-
-                    const Text('Remark', style: TextStyle(fontSize: 13)),
-                    const SizedBox(height: 6),
-                    TextField(
-                      decoration: const InputDecoration(labelText: 'Enter Description(Whats this for)'),
-                      minLines: 1,
-                      maxLines: 3,
-                    ),
-
-                    const SizedBox(height: 14),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          WithdrawalFlow.showSummary(
-                            context,
-                            amount: 5000,
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: isLight
-                              ? const Color(0xFF2B124C)
-                              : const Color(0xFF632AAE),
-                        ),
-                        child: const Text('Proceed Withdrawal', style: TextStyle(
-                          color: Colors.white
-                        ),),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 18),
-
-            // Real-time bank monitor card
-            Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 1,
-              child: ListTile(
-                leading: Container(
+          ),
+          const SizedBox(height: 14),
+          SemiCard(
+            child: Row(
+              children: [
+                Container(
                   width: 44,
                   height: 44,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).inputDecorationTheme.fillColor,
-                    borderRadius: BorderRadius.circular(8),
+                  decoration: BoxDecoration(color: context.iconWash, borderRadius: BorderRadius.circular(12)),
+                  child: Icon(Ionicons.pulse_outline, color: context.brand),
+                ),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Real-time Bank Monitor', style: TextStyle(fontWeight: FontWeight.w600)),
+                      Text('Confirm the strength of the bank', style: TextStyle(fontSize: 12, color: Color(0xFF6B7280))),
+                    ],
                   ),
-                  child: Icon(Icons.monitor_heart, color: isLight
-                      ? const Color(0xFF2B124C)
-                      : const Color(0xFF632AAE)),
                 ),
-                title: const Text('Real-time Bank Monitor'),
-                subtitle: const Text('Confirm the strength of the bank'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16, color: isLight
-                    ? const Color(0xFF2B124C)
-                    : const Color(0xFF632AAE)),
-                onTap: () {},
-              ),
+                Icon(Icons.chevron_right, color: context.iconTint),
+              ],
             ),
-
-            const SizedBox(height: 16),
-
-            // Beneficiary selection
-            Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Select Beneficiary', style: TextStyle(fontWeight: FontWeight.w600)),
-                    const SizedBox(height: 12),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: 'search Beneficiary',
-                        prefixIcon: const Icon(Icons.search),
-                        filled: true,
-                        fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    // Beneficiary list items
-                    _beneficiaryItem(context, sampleAvatar1, 'Jose Mourinho', 'Providus Bank - 6567554567'),
-                    const Divider(height: 8),
-                    _beneficiaryItem(context, sampleAvatar2, 'Jose Mourinho', 'Providus Bank - 6567554567'),
-                    const Divider(height: 8),
-                    _beneficiaryItem(context, sampleAvatar3, 'Jose Mourinho', 'Providus Bank - 6567554567'),
-                  ],
+          ),
+          const SizedBox(height: 14),
+          SemiCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Select Beneficiary', style: TextStyle(fontWeight: FontWeight.w700)),
+                const SizedBox(height: 12),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search beneficiary',
+                    prefixIcon: Icon(Ionicons.search_outline, color: context.brand),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 8),
+                _beneficiary(context, 'Jose Mourinho', 'Providus Bank - 6567554567'),
+                Divider(color: context.hairline),
+                _beneficiary(context, 'Jose Mourinho', 'Providus Bank - 6567554567'),
+                Divider(color: context.hairline),
+                _beneficiary(context, 'Jose Mourinho', 'Providus Bank - 6567554567'),
+              ],
             ),
-
-            const SizedBox(height: 20),
-
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _beneficiaryItem(BuildContext context, String imageUrl, String name, String subtitle) {
+  Widget _beneficiary(BuildContext context, String name, String subtitle) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: SizedBox(
-        width: 44,
-        height: 44,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(44),
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(
-              color: Colors.grey,
-              child: const Icon(Icons.person, color: Colors.white),
-            ),
-          ),
-        ),
-      ),
-      title: Text(name),
-      subtitle: Text(subtitle),
+      leading: const SemiAvatar(size: 44),
+      title: Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
+      subtitle: Text(subtitle, style: TextStyle(color: context.semi.muted, fontSize: 12)),
       onTap: () {},
     );
   }

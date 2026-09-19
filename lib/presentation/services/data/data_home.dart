@@ -1,222 +1,134 @@
 import 'package:flutter/material.dart';
-import 'package:semi_bill/presentation/services/airtime/airtime_amount.dart';
 import 'package:semi_bill/presentation/services/data/data_amount.dart';
+import 'package:semi_bill/themes/app_theme.dart';
+import 'package:semi_bill/ui/ionicons.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 
 class DataScreen extends StatelessWidget {
   const DataScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
+      backgroundColor: context.pageBg,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        centerTitle: true,
-        elevation: 0,
-        title: const Text(
-          "Airtime",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        backgroundColor: context.pageBg,
+        leading: const SemiBackButton(),
+        title: const Text('Data'),
       ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            // PROMO BANNER CARD
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  // Top promo image
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                    child: Image.asset(
-                      "assets/images/gift_banner.jpg", // <-- replace with your banner
-                      height: 110,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  // Avatar + Phone + Fav
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundImage: AssetImage("assets/avatar_1.jpg"),
-                        ),
-                        const SizedBox(width: 10),
-                        const Expanded(
-                          child: Text(
-                            "09045667844",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: const EdgeInsets.all(6),
-                          child: Icon(Icons.favorite_outline, color: isLight ? const Color(0xFF2B124C) : const Color(0xFF632AAE),),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            // SELECT NETWORK CARD
-            _buildSectionCard(
-              title: "Select Network",
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _networkButton("MTN", "assets/images/mtn.png"),
-                  _networkButton("9 Mobile", "assets/images/9mobile.png"),
-                  _networkButton("Airtel", "assets/images/airtel.png"),
-                  _networkButton("Glo", "assets/images/glo.png"),
-                ],
-              ), context: context,
-            ),
-            const SizedBox(height: 20),
-            // SELECT BENEFICIARY CARD
-            _buildSectionCard(
-              title: "Select Beneficiary",
-              child: Column(
-                children: [
-                  // Search box
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.search, size: 20, color: Colors.grey),
-                        SizedBox(width: 8),
-                        Text(
-                          "search Beneficiary",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _beneficiaryTile("assets/avatar_1.jpg", "08134243438"),
-                  _beneficiaryTile("assets/avatar_1.jpg", "08134243438"),
-                  _beneficiaryTile("assets/avatar_1.jpg", "08134243438"),
-                ],
-              ), context: context,
-            ),
-            const SizedBox(height: 30),
-            // PROCEED BUTTON
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isLight ? const Color(0xFF2B124C)
-                      : const Color(0xFF632AAE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => DataDetailsScreen()));
-                },
-                child: const Text(
-                  "Proceed",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-          ],
-        ),
-      ),
-    );
-  }
-  // REUSABLE SECTION CARD
-  Widget _buildSectionCard({required String title, required Widget child, required BuildContext context}) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          )
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         children: [
-          Text(title,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-          const SizedBox(height: 8),
-          child,
+          SemiCard(
+            padding: EdgeInsets.zero,
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                  child: Image.asset(
+                    'assets/images/gift_banner.jpg',
+                    height: 110,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                  child: Row(
+                    children: [
+                      const SemiAvatar(size: 40),
+                      const SizedBox(width: 10),
+                      const Expanded(
+                        child: Text('09045667844', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(color: context.iconWash, shape: BoxShape.circle),
+                        padding: const EdgeInsets.all(8),
+                        child: Icon(Ionicons.heart_outline, color: context.brand, size: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          SemiCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Select Network', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                const SizedBox(height: 14),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _network('MTN', 'assets/images/mtn.png', context),
+                    _network('9 Mobile', 'assets/images/9mobile.png', context),
+                    _network('Airtel', 'assets/images/airtel.png', context),
+                    _network('Glo', 'assets/images/glo.png', context),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          SemiCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Select Beneficiary', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                const SizedBox(height: 12),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search beneficiary',
+                    prefixIcon: Icon(Ionicons.search_outline, color: context.brand),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                _beneficiary('08134243438'),
+                Divider(color: context.hairline),
+                _beneficiary('08134243438'),
+                Divider(color: context.hairline),
+                _beneficiary('08134243438'),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          SemiButton(
+            label: 'Proceed',
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const DataDetailsScreen()));
+            },
+          ),
         ],
       ),
     );
   }
-  // NETWORK BUTTON
-  Widget _networkButton(String label, String asset) {
+
+  Widget _network(String name, String asset, BuildContext context) {
     return Column(
       children: [
         Container(
-          height: 45,
-          width: 45,
-          padding: const EdgeInsets.all(8),
+          height: 52,
+          width: 52,
           decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            borderRadius: BorderRadius.circular(12),
+            color: context.iconWash,
+            borderRadius: BorderRadius.circular(16),
           ),
-          child: Image.asset(asset),
+          padding: const EdgeInsets.all(8),
+          child: Image.asset(asset, fit: BoxFit.contain),
         ),
         const SizedBox(height: 6),
-        Text(label, style: const TextStyle(fontSize: 12)),
+        Text(name, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
       ],
     );
   }
-  // BENEFICIARY TILE
-  Widget _beneficiaryTile(String avatar, String number) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            CircleAvatar(radius: 18, backgroundImage: AssetImage(avatar)),
-            const SizedBox(width: 12),
-            Text(number, style: const TextStyle(fontSize: 14)),
-          ],
-        ),
-        const Divider(height: 18),
-      ],
+
+  Widget _beneficiary(String phone) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: const SemiAvatar(size: 40),
+      title: Text(phone, style: const TextStyle(fontWeight: FontWeight.w600)),
     );
   }
 }
