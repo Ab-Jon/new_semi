@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:semi_bill/Auth/register/register_screen.dart';
 import 'package:semi_bill/Auth/sign_in/forgot_password.dart';
 import 'package:semi_bill/Auth/verify/verify_bvn.dart';
+import 'package:semi_bill/home_screen.dart';
 import 'package:semi_bill/ui/semi_ui.dart';
 import '../providers/auth_provider.dart';
 import '../providers/auth_token_provider.dart';
@@ -135,6 +136,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     MaterialPageRoute(builder: (context) => const RegisterScreen()),
                   );
                 },
+              ),
+              const SizedBox(height: 8),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HomeScreen()),
+                    );
+                  },
+                  child: const Text('Explore the app'),
+                ),
               ),
             ],
           ),
