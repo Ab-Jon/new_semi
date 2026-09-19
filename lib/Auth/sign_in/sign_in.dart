@@ -137,17 +137,15 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 8),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    );
-                  },
-                  child: const Text('Explore the app'),
-                ),
+              const SizedBox(height: 28),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const HomeScreen()),
+                  );
+                },
+                child: const Text('Explore the app'),
               ),
             ],
           ),
@@ -178,6 +176,11 @@ class _AuthLinkRow extends StatelessWidget {
           style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
         ),
         TextButton(
+          style: TextButton.styleFrom(
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            visualDensity: VisualDensity.compact,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+          ),
           onPressed: onTap,
           child: Text(
             action,

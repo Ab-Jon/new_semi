@@ -215,9 +215,9 @@ class WalletDashboardScreen extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 12),
-              _tx(context, 'https://i.pravatar.cc/100?img=5', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
+              _tx(context, 'assets/avatar_1.jpg', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
               const SizedBox(height: 8),
-              _tx(context, 'https://i.pravatar.cc/100?img=8', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
+              _tx(context, 'assets/avatar_1.jpg', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
               const SizedBox(height: 20),
               const Text(
                 'Report',
@@ -258,7 +258,7 @@ class WalletDashboardScreen extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          CircleAvatar(backgroundImage: NetworkImage(avatar), radius: 22),
+          CircleAvatar(backgroundImage: AssetImage(avatar), radius: 22),
           const SizedBox(width: 12),
           Expanded(
             child: Column(

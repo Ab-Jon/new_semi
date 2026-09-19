@@ -63,7 +63,9 @@ class _PromoBannerSliderState extends ConsumerState<PromoBannerSlider> {
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
 
-    return SizedBox(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
       height: 120,
       child: PageView.builder(
         controller: _pageController,
@@ -103,6 +105,7 @@ class _PromoBannerSliderState extends ConsumerState<PromoBannerSlider> {
             ),
           );
         },
+      ),
       ),
     );
   }

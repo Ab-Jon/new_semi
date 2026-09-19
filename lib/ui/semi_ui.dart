@@ -551,6 +551,7 @@ class PhoneShell extends StatelessWidget {
   final Widget child;
 
   static const double width = 390;
+  static const double height = 844;
 
   @override
   Widget build(BuildContext context) {
@@ -558,15 +559,17 @@ class PhoneShell extends StatelessWidget {
     final useFrame = size.width > width + 24;
     if (!useFrame) return child;
 
-    final framed = Size(width, size.height);
+    final frameH = size.height < height ? size.height : height;
+    final framed = Size(width, frameH);
     return ColoredBox(
       color: SemiColors.phoneChrome,
       child: Center(
         child: Container(
           width: width,
-          height: size.height,
+          height: frameH,
           decoration: BoxDecoration(
             color: Colors.black,
+            borderRadius: BorderRadius.circular(28),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.4),
@@ -575,6 +578,7 @@ class PhoneShell extends StatelessWidget {
               ),
             ],
           ),
+          clipBehavior: Clip.antiAlias,
           child: MediaQuery(
             data: MediaQuery.of(context).copyWith(size: framed),
             child: child,
