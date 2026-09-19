@@ -63,14 +63,7 @@ class SettingScreen extends ConsumerWidget {
                 children: [
                   Stack(
                     children: [
-                      ClipOval(
-                        child: Image.asset(
-                          'assets/avatar_1.jpg',
-                          height: 52,
-                          width: 52,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      const SemiAvatar(size: 52),
                       Positioned(
                         left: 0,
                         bottom: 0,

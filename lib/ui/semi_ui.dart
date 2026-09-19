@@ -528,6 +528,36 @@ class SemiGroupCard extends StatelessWidget {
   }
 }
 
+class SemiAvatar extends StatelessWidget {
+  const SemiAvatar({
+    super.key,
+    this.size = 52,
+    this.asset = 'assets/avatar_1.jpg',
+  });
+
+  final double size;
+  final String asset;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipOval(
+      child: Image.asset(
+        asset,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => Container(
+          width: size,
+          height: size,
+          color: context.iconWash,
+          alignment: Alignment.center,
+          child: Icon(Ionicons.person, color: context.brand, size: size * 0.45),
+        ),
+      ),
+    );
+  }
+}
+
 class SemiBackButton extends StatelessWidget {
   const SemiBackButton({super.key});
 

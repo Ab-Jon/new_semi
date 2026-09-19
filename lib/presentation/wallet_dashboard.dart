@@ -258,7 +258,7 @@ class WalletDashboardScreen extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          CircleAvatar(backgroundImage: AssetImage(avatar), radius: 22),
+          SemiAvatar(size: 44, asset: avatar),
           const SizedBox(width: 12),
           Expanded(
             child: Column(

@@ -58,7 +58,7 @@ class DataScreen extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 20,
-                          backgroundImage: AssetImage("assets/avatar_1.png"),
+                          backgroundImage: AssetImage("assets/avatar_1.jpg"),
                         ),
                         const SizedBox(width: 10),
                         const Expanded(
@@ -124,9 +124,9 @@ class DataScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  _beneficiaryTile("assets/avatar_1.png", "08134243438"),
-                  _beneficiaryTile("assets/avatar_1.png", "08134243438"),
-                  _beneficiaryTile("assets/avatar_1.png", "08134243438"),
+                  _beneficiaryTile("assets/avatar_1.jpg", "08134243438"),
+                  _beneficiaryTile("assets/avatar_1.jpg", "08134243438"),
+                  _beneficiaryTile("assets/avatar_1.jpg", "08134243438"),
                 ],
               ), context: context,
             ),
