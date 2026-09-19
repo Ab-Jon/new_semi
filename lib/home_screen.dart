@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Positioned(
             left: 16,
             right: 16,
-            bottom: 18,
+            bottom: 12 + MediaQuery.paddingOf(context).bottom,
             child: SemiNavBar(
               index: _selectedIndex,
               onChanged: (i) => setState(() => _selectedIndex = i),

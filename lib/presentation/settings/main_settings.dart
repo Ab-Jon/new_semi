@@ -25,38 +25,30 @@ class SettingScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: context.pageBg,
+      appBar: AppBar(
+        backgroundColor: context.pageBg,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text('Settings'),
+        actions: [
+          IconButton(
+            tooltip: isDark ? 'Light mode' : 'Dark mode',
+            onPressed: () {
+              ref.read(themeProvider.notifier).state =
+                  isDark ? ThemeMode.light : ThemeMode.dark;
+            },
+            icon: Icon(
+              isDark ? Ionicons.sunny_outline : Ionicons.moon_outline,
+              size: 22,
+              color: context.semi.muted,
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
+        top: false,
         child: Column(
           children: [
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 44,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  const Text(
-                    'Settings',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  Positioned(
-                    right: 8,
-                    child: IconButton(
-                      tooltip: 'Theme',
-                      onPressed: () {
-                        ref.read(themeProvider.notifier).state =
-                            isDark ? ThemeMode.light : ThemeMode.dark;
-                      },
-                      icon: Icon(
-                        isDark ? Ionicons.sunny_outline : Ionicons.moon_outline,
-                        size: 20,
-                        color: context.semi.muted,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(

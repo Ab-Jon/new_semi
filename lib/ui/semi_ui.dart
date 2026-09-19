@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:semi_bill/ui/ionicons.dart';
@@ -574,7 +575,8 @@ class SemiBackButton extends StatelessWidget {
   }
 }
 
-/// Constrains Flutter web to a 390px phone so screens match Figma frames.
+/// On wide web/desktop previews, center a 390px phone so screens match Figma.
+/// Real iOS/Android devices always use the full display.
 class PhoneShell extends StatelessWidget {
   const PhoneShell({super.key, required this.child});
 
@@ -585,6 +587,8 @@ class PhoneShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!kIsWeb) return child;
+
     final size = MediaQuery.sizeOf(context);
     final useFrame = size.width > width + 24;
     if (!useFrame) return child;

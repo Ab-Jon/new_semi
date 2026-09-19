@@ -2,7 +2,7 @@
 
 Flutter client for [SEMIBILL](https://app.semibill.com) — wallet, bill payments, tickets, and crowdfunding.
 
-The UI was rebuilt from the SEMIBILL Figma frames (node 348-8175): phone-width chrome, floating pill tab bar, Settings and Security lists, Home, Wallet, and related flows. Backend contracts are unchanged: same Dio base URL, auth endpoints, and Riverpod providers.
+The UI was rebuilt from the SEMIBILL Figma frames (node 348-8175): floating pill tab bar, Settings and Security lists, Home, Wallet, and related flows. On a phone or tablet the app fills the screen. The 390×844 phone chrome is only used in wide web previews. Backend contracts are unchanged: same Dio base URL, auth endpoints, and Riverpod providers.
 
 ## Run locally
 
