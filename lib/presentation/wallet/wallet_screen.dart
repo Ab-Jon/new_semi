@@ -167,7 +167,7 @@ class _WalletScreenState extends State<WalletScreen> {
       appBar: AppBar(
         title: const Text('Wallet'),
       ),
-      backgroundColor: isLight ? const Color(0xFFF5F4F8) : const Color(0xFF0F0F0F),
+      backgroundColor: isLight ? Colors.white : const Color(0xFF0B0B0B),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         child: Column(
@@ -177,7 +177,7 @@ class _WalletScreenState extends State<WalletScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isLight ? Colors.grey.shade100 : const Color(0xFF0F0F0F),
+                color: isLight ? Colors.white : const Color(0xFF0B0B0B),
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16)
@@ -255,7 +255,7 @@ class _WalletScreenState extends State<WalletScreen> {
               switchOutCurve: Curves.easeIn,
               child: _buildPortfolioContent(),
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 120),
           ],
         ),
       ),
@@ -266,14 +266,25 @@ class _WalletScreenState extends State<WalletScreen> {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return Column(
       children: [
-        CircleAvatar(
-          backgroundColor: isLight ? Colors.white : const Color(0xFF1E1E1E),
-          radius: 22,
+        Container(
+          height: 52,
+          width: 52,
+          decoration: BoxDecoration(
+            color: isLight ? Colors.white : const Color(0xFF1E1E1E),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: isLight
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : [],
+          ),
           child: Icon(
             icon,
-            color: isLight
-                ? Colors.black
-                : Colors.white,
+            color: isLight ? const Color(0xFF2B124C) : Colors.white,
             size: 22,
           ),
         ),

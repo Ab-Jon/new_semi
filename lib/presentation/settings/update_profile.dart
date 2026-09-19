@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -250,10 +251,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         elevation: 0,
         centerTitle: true,
         title: const Text('Update Profile', style: TextStyle(fontWeight: FontWeight.w600)),
-        leading: IconButton(
-          onPressed: () => Navigator.maybePop(context),
-          icon: Icon(Icons.arrow_back_ios, color: isLight ? Colors.black : Colors.white),
-        ),
+        leading: const SemiBackButton(),
       ),
       body: Form(
         key: _formKey,

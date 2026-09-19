@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../themes/withdraw_theme.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 import 'confirm_withdrawal.dart';
 
 class WithdrawalScreen extends StatelessWidget {
@@ -16,7 +16,9 @@ class WithdrawalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        leading: const SemiBackButton(),
         title: const Text('Withdrawal'),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.history, color: isLight

@@ -111,14 +111,14 @@ class SemiCard extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: context.cardColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: context.isDark
             ? []
             : [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
-                  blurRadius: 16,
-                  offset: const Offset(0, 6),
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 18,
+                  offset: const Offset(0, 8),
                 ),
               ],
       ),
@@ -245,23 +245,23 @@ class SemiIconAction extends StatelessWidget {
             width: 56,
             decoration: BoxDecoration(
               color: context.isDark ? SemiColors.surfaceDark : Colors.white,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(16),
               boxShadow: context.isDark
                   ? []
                   : [
                       BoxShadow(
-                        color: SemiColors.brand.withValues(alpha: 0.08),
-                        blurRadius: 12,
+                        color: Colors.black.withValues(alpha: 0.06),
+                        blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
                     ],
             ),
-            child: Icon(icon, color: context.brand, size: 24),
+            child: Icon(icon, color: context.brand, size: 22),
           ),
           const SizedBox(height: 8),
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
           ),
         ],
       ),
@@ -397,47 +397,274 @@ class SemiListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return SemiMenuRow(
+      icon: icon,
+      title: title,
+      subtitle: subtitle,
+      onTap: onTap,
+      trailing: trailing,
+      showDivider: showDivider,
+    );
+  }
+}
+
+/// Figma settings/security row: faint lavender icon wash + chevron.
+class SemiMenuRow extends StatelessWidget {
+  const SemiMenuRow({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    this.onTap,
+    this.trailing,
+    this.showDivider = true,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final VoidCallback? onTap;
+  final Widget? trailing;
+  final bool showDivider;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
+        InkWell(
           onTap: onTap,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          leading: Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: context.brand.withValues(alpha: context.isDark ? 0.2 : 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, size: 18, color: context.brand),
-          ),
-          title: Text(
-            title,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-          ),
-          subtitle: subtitle == null
-              ? null
-              : Text(
-                  subtitle!,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Theme.of(context).extension<AppColors>()!.muted,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                Container(
+                  height: 36,
+                  width: 36,
+                  decoration: BoxDecoration(
+                    color: context.iconWash,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, size: 18, color: context.iconTint),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          subtitle!,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Theme.of(context).extension<AppColors>()!.muted,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
-          trailing: trailing ??
-              Icon(
-                Icons.chevron_right,
-                color: Theme.of(context).extension<AppColors>()!.muted,
-              ),
+                trailing ??
+                    Icon(
+                      Icons.chevron_right,
+                      size: 22,
+                      color: context.isDark
+                          ? Colors.white38
+                          : const Color(0xFFC5C0CE),
+                    ),
+              ],
+            ),
+          ),
         ),
         if (showDivider)
           Divider(
             height: 1,
-            indent: 16,
+            thickness: 1,
+            indent: 66,
             endIndent: 16,
-            color: Theme.of(context).dividerColor,
+            color: context.hairline,
           ),
       ],
+    );
+  }
+}
+
+class SemiGroupCard extends StatelessWidget {
+  const SemiGroupCard({
+    super.key,
+    required this.children,
+    this.margin,
+  });
+
+  final List<Widget> children;
+  final EdgeInsets? margin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: margin ?? const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: context.isDark ? SemiColors.cardDark : Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: context.isDark
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+      ),
+      child: Column(children: children),
+    );
+  }
+}
+
+class SemiBackButton extends StatelessWidget {
+  const SemiBackButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Icons.arrow_back_ios_new,
+        size: 18,
+        color: Theme.of(context).extension<AppColors>()!.textPrimary,
+      ),
+      onPressed: () => Navigator.maybePop(context),
+    );
+  }
+}
+
+/// Constrains Flutter web to a 390px phone so screens match Figma frames.
+class PhoneShell extends StatelessWidget {
+  const PhoneShell({super.key, required this.child});
+
+  final Widget child;
+
+  static const double width = 390;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final useFrame = size.width > width + 24;
+    if (!useFrame) return child;
+
+    final framed = Size(width, size.height);
+    return ColoredBox(
+      color: SemiColors.phoneChrome,
+      child: Center(
+        child: Container(
+          width: width,
+          height: size.height,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.4),
+                blurRadius: 40,
+                offset: const Offset(0, 12),
+              ),
+            ],
+          ),
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(size: framed),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SemiNavBar extends StatelessWidget {
+  const SemiNavBar({
+    super.key,
+    required this.index,
+    required this.onChanged,
+  });
+
+  final int index;
+  final ValueChanged<int> onChanged;
+
+  static const _items = [
+    (Ionicons.home_outline, Ionicons.home, 'Home'),
+    (Ionicons.briefcase_outline, Ionicons.briefcase, 'Services'),
+    (Ionicons.wallet_outline, Ionicons.wallet, 'Wallet'),
+    (Ionicons.settings_outline, Ionicons.settings, 'Settings'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final bar = context.isDark ? SemiColors.navBarDark : SemiColors.navBar;
+    return Container(
+      height: 64,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: bar,
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.22),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Row(
+        children: List.generate(_items.length, (i) {
+          final selected = index == i;
+          final item = _items[i];
+          return Expanded(
+            flex: selected ? 3 : 2,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => onChanged(i),
+              child: Center(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  height: 48,
+                  padding: EdgeInsets.symmetric(horizontal: selected ? 14 : 0),
+                  decoration: BoxDecoration(
+                    color: selected ? SemiColors.navSelected : Colors.transparent,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        selected ? item.$2 : item.$1,
+                        size: 22,
+                        color: selected ? SemiColors.brand : Colors.white,
+                      ),
+                      if (selected) ...[
+                        const SizedBox(width: 6),
+                        Text(
+                          item.$3,
+                          style: const TextStyle(
+                            color: SemiColors.brand,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }

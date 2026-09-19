@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// SEMIBILL tokens taken from the Figma file (light + dark).
+/// SEMIBILL tokens taken from the Figma frames (node 348-8175).
 class SemiColors {
   static const brand = Color(0xFF2B124C);
   static const brandBright = Color(0xFF632AAE);
   static const accent = Color(0xFF6C3EFF);
   static const lavender = Color(0xFFDFD7F3);
-  static const lavenderSoft = Color(0xFFF3F2FF);
-  static const bgLight = Color(0xFFF5F4F8);
-  static const bgDark = Color(0xFF0F0F0F);
+  static const lavenderSoft = Color(0xFFF3EDFF);
+  static const iconWash = Color(0xFFF3EDFF);
+  static const iconTint = Color(0xFF9B87C4);
+  static const navBar = Color(0xFF2B124C);
+  static const navBarDark = Color(0xFF141414);
+  static const navSelected = Color(0xFFE8DFF5);
+  static const bgLight = Color(0xFFFFFFFF);
+  static const bgDark = Color(0xFF0B0B0B);
   static const cardDark = Color(0xFF161616);
-  static const surfaceDark = Color(0xFF1E1E1E);
+  static const surfaceDark = Color(0xFF1C1C1C);
   static const mutedLight = Color(0xFF6B7280);
   static const mutedDark = Color(0xFF9CA3AF);
   static const success = Color(0xFF16A34A);
   static const danger = Color(0xFFE11D48);
+  static const phoneChrome = Color(0xFF1A1228);
+  static const dividerLight = Color(0xFFF0EEF4);
 }
 
 class AppColors extends ThemeExtension<AppColors> {
@@ -77,6 +84,11 @@ extension SemiThemeX on BuildContext {
   Color get brand => isDark ? SemiColors.brandBright : SemiColors.brand;
   Color get pageBg => isDark ? SemiColors.bgDark : SemiColors.bgLight;
   Color get cardColor => isDark ? SemiColors.cardDark : Colors.white;
+  Color get iconWash => isDark ? const Color(0xFF2A1A44) : SemiColors.iconWash;
+  Color get iconTint => isDark ? SemiColors.brandBright : SemiColors.iconTint;
+  Color get hairline => isDark
+      ? Colors.white.withValues(alpha: 0.06)
+      : SemiColors.dividerLight;
 }
 
 class SemiAppTheme {
@@ -88,7 +100,7 @@ class SemiAppTheme {
         text: const Color(0xFF111111),
         muted: SemiColors.mutedLight,
         card: Colors.white,
-        fill: const Color(0xFFF3F2F6),
+        fill: const Color(0xFFF6F4FA),
         accentFill: SemiColors.lavenderSoft,
       );
 

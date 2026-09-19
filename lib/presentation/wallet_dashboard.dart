@@ -2,7 +2,6 @@ import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:semi_bill/ui/ionicons.dart';
 import 'package:semi_bill/presentation/draw_home.dart';
 import 'package:semi_bill/presentation/promo_banner.dart';
 import 'package:semi_bill/presentation/services/airtime/airtime_home.dart';
@@ -14,6 +13,7 @@ import 'package:semi_bill/presentation/wallet/transfer/gift_user_page.dart';
 import 'package:semi_bill/presentation/wallet/wallet_bottom_sheet.dart';
 import 'package:semi_bill/presentation/wallet/withdrawal_screen.dart';
 import 'package:semi_bill/themes/app_theme.dart';
+import 'package:semi_bill/ui/ionicons.dart';
 import 'package:semi_bill/ui/semi_ui.dart';
 
 class WalletDashboardScreen extends ConsumerWidget {
@@ -27,6 +27,12 @@ class WalletDashboardScreen extends ConsumerWidget {
       drawer: const DrawerContent(),
       appBar: AppBar(
         backgroundColor: context.pageBg,
+        leading: Builder(
+          builder: (ctx) => IconButton(
+            onPressed: () => Scaffold.of(ctx).openDrawer(),
+            icon: Icon(Ionicons.menu_outline, color: context.semi.textPrimary),
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {},
@@ -36,52 +42,50 @@ class WalletDashboardScreen extends ConsumerWidget {
             onPressed: () {},
             icon: Icon(Ionicons.notifications_outline, color: context.semi.textPrimary),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SemiCard(
-                padding: const EdgeInsets.all(14),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
                       'Hi, Ubokobong',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 20,
                           ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: context.pageBg,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          CountryFlag.fromCountryCode(
-                            'US',
-                            theme: const ImageTheme(shape: Circle(), width: 22),
-                          ),
-                          const SizedBox(width: 6),
-                          const Text('EN', style: TextStyle(fontWeight: FontWeight.w600)),
-                        ],
-                      ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: context.isDark ? SemiColors.surfaceDark : const Color(0xFFF6F4FA),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  ],
-                ),
+                    child: Row(
+                      children: [
+                        CountryFlag.fromCountryCode(
+                          'US',
+                          theme: const ImageTheme(shape: Circle(), width: 18),
+                        ),
+                        const SizedBox(width: 6),
+                        const Text('EN', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 28),
               Center(
                 child: Text(
                   'Main Balance',
-                  style: TextStyle(fontSize: 15, color: context.semi.muted),
+                  style: TextStyle(fontSize: 14, color: context.semi.muted),
                 ),
               ),
               const SizedBox(height: 6),
@@ -95,35 +99,36 @@ class WalletDashboardScreen extends ConsumerWidget {
                         isVisible ? '₦24,100.00' : '********',
                         style: const TextStyle(
                           fontSize: 32,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.4,
                         ),
                       ),
+                      const SizedBox(width: 4),
                       IconButton(
                         onPressed: () {
                           ref.read(balanceVisibilityProvider.notifier).state = !isVisible;
                         },
                         icon: Icon(
-                          isVisible
-                              ? Icons.remove_red_eye_outlined
-                              : Icons.visibility_off_outlined,
+                          isVisible ? Ionicons.eye_outline : Ionicons.eye_off_outline,
                           color: context.brand,
+                          size: 22,
                         ),
                       ),
                     ],
                   );
                 },
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 18),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SemiIconAction(
-                    icon: Icons.add,
+                    icon: Ionicons.add,
                     label: 'Deposit',
                     onTap: () => WalletDepositSheet.show(context),
                   ),
                   SemiIconAction(
-                    icon: Icons.arrow_upward,
+                    icon: Ionicons.arrow_up_outline,
                     label: 'Withdraw',
                     onTap: () {
                       Navigator.push(
@@ -133,7 +138,7 @@ class WalletDashboardScreen extends ConsumerWidget {
                     },
                   ),
                   SemiIconAction(
-                    icon: Icons.swap_horiz,
+                    icon: Ionicons.swap_horizontal_outline,
                     label: 'Transfer',
                     onTap: () {
                       Navigator.push(
@@ -144,13 +149,14 @@ class WalletDashboardScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: 28),
               const Text(
                 'Services',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               SemiCard(
+                padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
                 child: GridView.count(
                   shrinkWrap: true,
                   crossAxisCount: 4,
@@ -182,51 +188,52 @@ class WalletDashboardScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               const PromoBannerSlider(),
-              const SizedBox(height: 16),
-              SemiCard(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Recent Transaction',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          'See all →',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: context.brand,
-                          ),
-                        ),
-                      ],
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Recent Transaction',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const StatementReportPage()),
+                      );
+                    },
+                    child: Text(
+                      'See all →',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        color: context.brand,
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    _tx(context, 'https://i.pravatar.cc/100?img=5', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
-                    const SizedBox(height: 8),
-                    _tx(context, 'https://i.pravatar.cc/100?img=8', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              const PromoBannerSlider(),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
+              _tx(context, 'https://i.pravatar.cc/100?img=5', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
+              const SizedBox(height: 8),
+              _tx(context, 'https://i.pravatar.cc/100?img=8', 'Withdraw', 'Paid 30 mins ago', '₦100.15'),
+              const SizedBox(height: 20),
               const Text(
                 'Report',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               Row(
                 children: [
-                  _report(context, Icons.call_outlined, 'Statement', () {
+                  _report(context, Ionicons.document_text_outline, 'Statement', () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => const StatementReportPage()),
                     );
                   }),
-                  _report(context, Icons.history_outlined, 'Dispute History', () {}),
-                  _report(context, Icons.bar_chart_outlined, 'Statistics', () {}),
+                  _report(context, Ionicons.time_outline, 'Dispute', () {}),
+                  _report(context, Ionicons.stats_chart_outline, 'Statistics', () {}),
                 ],
               ),
             ],
@@ -247,21 +254,18 @@ class WalletDashboardScreen extends ConsumerWidget {
     String subtitle,
     String amount,
   ) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      decoration: BoxDecoration(
-        color: context.pageBg,
-        borderRadius: BorderRadius.circular(12),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          CircleAvatar(backgroundImage: NetworkImage(avatar)),
-          const SizedBox(width: 10),
+          CircleAvatar(backgroundImage: NetworkImage(avatar), radius: 22),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+                Text(title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                const SizedBox(height: 2),
                 Text(
                   subtitle,
                   style: TextStyle(fontSize: 12, color: context.semi.muted),
@@ -269,9 +273,9 @@ class WalletDashboardScreen extends ConsumerWidget {
               ],
             ),
           ),
-          Text(amount, style: const TextStyle(fontWeight: FontWeight.w800)),
+          Text(amount, style: const TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(width: 6),
-          const Icon(Icons.north_east, size: 16, color: SemiColors.danger),
+          const Icon(Icons.north_east, size: 14, color: SemiColors.danger),
         ],
       ),
     );
@@ -290,19 +294,12 @@ class WalletDashboardScreen extends ConsumerWidget {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           decoration: BoxDecoration(
-            color: context.cardColor,
+            color: context.isDark ? SemiColors.cardDark : const Color(0xFFF6F4FA),
             borderRadius: BorderRadius.circular(14),
           ),
           child: Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: context.brand.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(icon, color: context.brand, size: 16),
-              ),
+              Icon(icon, color: context.brand, size: 16),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(

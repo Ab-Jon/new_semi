@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:semi_bill/presentation/wallet/transfer/widget/amount_button.dart';
 import 'package:semi_bill/presentation/wallet/transfer/widget/gift_summary.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 
 class GiftUserPage extends StatefulWidget {
   const GiftUserPage({super.key});
@@ -25,6 +26,7 @@ class _GiftUserPageState extends State<GiftUserPage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: const SemiBackButton(),
         title: const Text("Gift User"),
         centerTitle: true,
       ),

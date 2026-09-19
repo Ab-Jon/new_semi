@@ -187,43 +187,32 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-              GridView.builder(
+              SemiCard(
+                padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+                child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: services.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 2.8,
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 4,
+                  childAspectRatio: 0.78,
                 ),
                 itemBuilder: (context, index) {
                   final item = services[index];
-                  return SemiCard(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  return SemiServiceTile(
+                    icon: item['icon'] as IconData,
+                    label: item['title'] as String,
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => item['route'] as Widget),
                       );
                     },
-                    child: Row(
-                      children: [
-                        Icon(item['icon'] as IconData, color: context.brand, size: 20),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            item['title'] as String,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   );
                 },
+              ),
               ),
             ],
           ),

@@ -8,7 +8,7 @@ class TermsConditionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Terms & Conditions')),
+      appBar: AppBar(leading: const SemiBackButton(), title: const Text('Terms & Conditions')),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

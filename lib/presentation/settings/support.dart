@@ -8,7 +8,7 @@ class SupportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Support')),
+      appBar: AppBar(leading: const SemiBackButton(), title: const Text('Support')),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

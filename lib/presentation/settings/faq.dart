@@ -20,7 +20,7 @@ class _FaqPageState extends State<FaqPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('FAQ')),
+      appBar: AppBar(leading: const SemiBackButton(), title: const Text('FAQ')),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

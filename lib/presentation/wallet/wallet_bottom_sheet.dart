@@ -24,13 +24,15 @@ class WalletDepositSheet {
             children: [
               // top icon
               CircleAvatar(
-                radius: 26,
+                radius: 28,
                 backgroundColor: isLight
-                    ? const Color(0xFF2B124C)
-                    : const Color(0xFF632AAE),
-                child: Icon(Icons.savings, color: isLight
-                    ? const Color(0xFF2B124C)
-                    : const Color(0xFF632AAE), size: 26),
+                    ? const Color(0xFFF3EDFF)
+                    : const Color(0xFF2A1A44),
+                child: Icon(
+                  Icons.savings_outlined,
+                  color: isLight ? const Color(0xFF2B124C) : const Color(0xFF632AAE),
+                  size: 26,
+                ),
               ),
 
               const SizedBox(height: 15),

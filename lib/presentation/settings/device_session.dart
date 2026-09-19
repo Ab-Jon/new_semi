@@ -13,7 +13,7 @@ class DeviceSessionPage extends StatelessWidget {
       ('Samsung A54', 'Last seen yesterday', false),
     ];
     return Scaffold(
-      appBar: AppBar(title: const Text('Device & Session')),
+      appBar: AppBar(leading: const SemiBackButton(), title: const Text('Device & Session')),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

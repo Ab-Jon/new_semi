@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:semi_bill/presentation/splash_screen.dart';
 import 'package:semi_bill/themes/app_theme.dart';
 import 'package:semi_bill/themes/theme_provider.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -20,6 +21,7 @@ class MyApp extends ConsumerWidget {
       theme: SemiAppTheme.light(),
       darkTheme: SemiAppTheme.dark(),
       themeMode: mode,
+      builder: (context, child) => PhoneShell(child: child ?? const SizedBox.shrink()),
       home: const SplashScreen(),
     );
   }

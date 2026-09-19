@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:semi_bill/themes/app_theme.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 
 class NotificationSettingsPage extends StatefulWidget {
   const NotificationSettingsPage({super.key});
@@ -13,143 +15,92 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: context.pageBg,
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        centerTitle: true,
-        title: const Text(
-          "Notification",
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: isLight ? Colors.black : Colors.white, size: 18),
-          onPressed: () => Navigator.pop(context),
-        ),
+        backgroundColor: context.pageBg,
+        leading: const SemiBackButton(),
+        title: const Text('Notification'),
       ),
-
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            /// LOGIN ALERT CARD
-            Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.only(bottom: 16),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(0, 8, 0, 24),
+        children: [
+          SemiGroupCard(
+            children: [
+              _alertRow(
+                title: 'Login Alert',
+                value: loginAlert,
+                onChanged: (v) => setState(() => loginAlert = v),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Login Alert",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _emailOption(),
-                      Switch(
-                        value: loginAlert,
-                        activeColor: const Color(0xFF6C3EFF),
-                        onChanged: (value) {
-                          setState(() => loginAlert = value);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+              Divider(height: 1, indent: 16, endIndent: 16, color: context.hairline),
+              _alertRow(
+                title: 'Transaction Alerts',
+                value: transactionAlert,
+                onChanged: (v) => setState(() => transactionAlert = v),
+                showDivider: false,
               ),
-            ),
-            /// TRANSACTION ALERT CARD
-            Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.only(bottom: 32),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Transaction Alerts",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _emailOption(),
-                      Switch(
-                        value: transactionAlert,
-                        activeColor: const Color(0xFF6C3EFF),
-                        onChanged: (value) {
-                          setState(() => transactionAlert = value);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            /// SAVE BUTTON
-            SizedBox(
+            ],
+          ),
+          const SizedBox(height: 28),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SizedBox(
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isLight
-                      ? const Color(0xFF2B124C)
-                      : const Color(0xFF632AAE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  "Save Changes",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Notification preferences saved')),
+                  );
+                },
+                child: const Text('Save Changes'),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-  /// EMAIL BADGE
-  Widget _emailOption() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: const Text(
-        "Email",
-        style: TextStyle(
-          color: Color(0xFF6C3EFF),
-          fontWeight: FontWeight.w500,
-        ),
+
+  Widget _alertRow({
+    required String title,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+    bool showDivider = true,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 12, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: context.iconWash,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  'Email',
+                  style: TextStyle(
+                    color: context.brand,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Switch.adaptive(
+                value: value,
+                activeTrackColor: SemiColors.brand,
+                onChanged: onChanged,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

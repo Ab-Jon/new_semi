@@ -9,7 +9,7 @@ class AccountVerificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Account Verification')),
+      appBar: AppBar(leading: const SemiBackButton(), title: const Text('Account Verification')),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

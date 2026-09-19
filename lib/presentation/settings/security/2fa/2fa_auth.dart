@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:semi_bill/presentation/settings/security/2fa/2fa_verify_options.dart';
+import 'package:semi_bill/themes/app_theme.dart';
+import 'package:semi_bill/ui/semi_ui.dart';
 
 class TwoFactorIntroPage extends StatelessWidget {
   const TwoFactorIntroPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: context.pageBg,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: isLight ? Colors.black : Colors.white, size: 18),
-          onPressed: () => Navigator.pop(context),
-        ),
+        backgroundColor: context.pageBg,
+        leading: const SemiBackButton(),
         title: const Text(
           "2FA Verification",
           style: TextStyle(
@@ -65,14 +62,6 @@ class TwoFactorIntroPage extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isLight
-                      ? const Color(0xFF2B124C)
-                      : const Color(0xFF632AAE),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
                 onPressed: () {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => TwoFAVerificationOptionsPage()));
